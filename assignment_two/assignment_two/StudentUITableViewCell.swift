@@ -1,19 +1,17 @@
 //
-//  UnitUITableViewCell.swift
+//  StudentUITableViewCell.swift
 //  assignment_two
 //
-//  Created by Swift Labourer on 10/5/21.
+//  Created by Swift Labourer on 11/5/21.
 //
 
 import UIKit
 
-class UnitUITableViewCell: UITableViewCell {
-
-    @IBOutlet var unitNameLabel: UILabel!
+class StudentUITableViewCell: UITableViewCell {
     
+    @IBOutlet var studentNameLabel: UILabel!
     
-    @IBOutlet var enterUnitButton: UIButton!
-    
+    @IBOutlet var studentGradeField: UITextField!
     
     override func awakeFromNib() {
         super.awakeFromNib()

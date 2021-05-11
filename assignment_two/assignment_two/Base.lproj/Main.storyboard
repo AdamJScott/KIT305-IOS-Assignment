@@ -12,7 +12,7 @@
         <!--ClassPage-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController title="ClassPage" id="BYZ-38-t0r" customClass="ViewController" customModule="assignment_two" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ClassPage" id="BYZ-38-t0r" customClass="WeeksViewController" customModule="assignment_two" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +24,7 @@
                                     <constraint firstAttribute="height" constant="400" id="XQC-w3-dfY"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="erq-FM-CaM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="au.edu.utas.ios.StudentCell" rowHeight="45" id="erq-FM-CaM" customClass="StudentUITableViewCell" customModule="assignment_two" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="24.5" width="382" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="erq-FM-CaM" id="YVA-gu-0MU">
@@ -41,9 +41,6 @@
                                                     <rect key="frame" x="298.5" y="4" width="67.5" height="37"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
-                                                    <connections>
-                                                        <segue destination="RSA-jh-cce" kind="show" identifier="moveToStudentView" id="Xe7-TH-uWh"/>
-                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -55,92 +52,53 @@
                                                 <constraint firstItem="hTe-0g-veq" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" constant="4" id="pPO-s3-9SE"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="9TQ-pz-XSJ">
-                                        <rect key="frame" x="0.0" y="69.5" width="382" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9TQ-pz-XSJ" id="hpc-mK-Cei">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="45"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvf-Vd-OTf">
-                                                    <rect key="frame" x="16" y="0.0" width="121.5" height="45"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qtt-PN-r61">
-                                                    <rect key="frame" x="298.5" y="4" width="67.5" height="37"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Qtt-PN-r61" firstAttribute="top" secondItem="hpc-mK-Cei" secondAttribute="top" constant="4" id="01D-Ze-per"/>
-                                                <constraint firstItem="mvf-Vd-OTf" firstAttribute="top" secondItem="hpc-mK-Cei" secondAttribute="top" id="1Qm-JR-uJ1"/>
-                                                <constraint firstAttribute="bottom" secondItem="mvf-Vd-OTf" secondAttribute="bottom" id="Me6-fb-dVf"/>
-                                                <constraint firstAttribute="trailing" secondItem="Qtt-PN-r61" secondAttribute="trailing" constant="16" id="aAi-2Q-uiV"/>
-                                                <constraint firstItem="mvf-Vd-OTf" firstAttribute="leading" secondItem="hpc-mK-Cei" secondAttribute="leading" constant="16" id="nHM-q0-3sl"/>
-                                                <constraint firstAttribute="bottom" secondItem="Qtt-PN-r61" secondAttribute="bottom" constant="4" id="wXh-n4-JgT"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="45" id="kxD-52-Pk8">
-                                        <rect key="frame" x="0.0" y="114.5" width="382" height="45"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kxD-52-Pk8" id="GXo-9u-Myh">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="45"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSK-7Y-fqr">
-                                                    <rect key="frame" x="16" y="0.0" width="121.5" height="45"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7JU-hC-nEz">
-                                                    <rect key="frame" x="298.5" y="4" width="67.5" height="37"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="7JU-hC-nEz" firstAttribute="top" secondItem="GXo-9u-Myh" secondAttribute="top" constant="4" id="BNW-qy-JS8"/>
-                                                <constraint firstItem="nSK-7Y-fqr" firstAttribute="top" secondItem="GXo-9u-Myh" secondAttribute="top" id="Efq-KB-yPO"/>
-                                                <constraint firstAttribute="bottom" secondItem="7JU-hC-nEz" secondAttribute="bottom" constant="4" id="UmT-qd-1hf"/>
-                                                <constraint firstItem="nSK-7Y-fqr" firstAttribute="leading" secondItem="GXo-9u-Myh" secondAttribute="leading" constant="16" id="bUY-68-kYr"/>
-                                                <constraint firstAttribute="trailing" secondItem="7JU-hC-nEz" secondAttribute="trailing" constant="16" id="dui-xA-Xe1"/>
-                                                <constraint firstAttribute="bottom" secondItem="nSK-7Y-fqr" secondAttribute="bottom" id="lcg-74-2y1"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="studentGradeField" destination="hTe-0g-veq" id="m3e-Pq-pjX"/>
+                                            <outlet property="studentNameLabel" destination="XB5-cv-1oc" id="Wea-zS-4b6"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <sections/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="pGN-ws-caZ"/>
+                                </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNn-eC-IgH">
-                                <rect key="frame" x="170.5" y="104" width="73" height="36"/>
+                                <rect key="frame" x="144.5" y="104" width="125" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="125" id="QZN-oV-U3L"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rah-UC-b2g">
                                 <rect key="frame" x="16" y="104" width="56" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="56" id="bRh-Ak-DWi"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Last"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v0x-xa-yaT">
                                 <rect key="frame" x="333" y="104" width="65" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="Ddq-WV-Nb2"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Next"/>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Qh0-BB-BZ3">
                                 <rect key="frame" x="16" y="206" width="382" height="32"/>
                                 <segments>
-                                    <segment title="Descending"/>
                                     <segment title="Ascending"/>
+                                    <segment title="Descending"/>
                                     <segment title="Graded"/>
                                     <segment title="Ungraded"/>
                                 </segments>
+                                <connections>
+                                    <action selector="sortChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="xjV-Un-6hE"/>
+                                </connections>
                             </segmentedControl>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a student" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raa-Dj-dTo">
                                 <rect key="frame" x="16" y="156" width="382" height="34"/>
@@ -183,7 +141,6 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="LNn-eC-IgH" firstAttribute="leading" secondItem="rah-UC-b2g" secondAttribute="trailing" constant="98.5" id="0DK-uy-Rva"/>
                             <constraint firstItem="raa-Dj-dTo" firstAttribute="top" secondItem="LNn-eC-IgH" secondAttribute="bottom" constant="16" id="0aO-7C-MsC"/>
                             <constraint firstItem="v0x-xa-yaT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="1a1-cu-IvJ"/>
                             <constraint firstItem="fOA-YM-Zi1" firstAttribute="top" secondItem="Qh0-BB-BZ3" secondAttribute="bottom" id="48z-er-jET"/>
@@ -203,7 +160,6 @@
                             <constraint firstItem="raa-Dj-dTo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ihw-GQ-rS2"/>
                             <constraint firstItem="LNn-eC-IgH" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="l9y-tO-sCX"/>
                             <constraint firstItem="rah-UC-b2g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="lpb-Sr-TF5"/>
-                            <constraint firstItem="v0x-xa-yaT" firstAttribute="leading" secondItem="LNn-eC-IgH" secondAttribute="trailing" constant="89.5" id="nrp-QF-24f"/>
                             <constraint firstItem="Qh0-BB-BZ3" firstAttribute="top" secondItem="raa-Dj-dTo" secondAttribute="bottom" constant="16" id="oqW-TJ-OFW"/>
                             <constraint firstItem="Opf-5I-sbl" firstAttribute="top" secondItem="fOA-YM-Zi1" secondAttribute="bottom" constant="16" id="qp7-Mn-nv5"/>
                             <constraint firstItem="gOK-R2-c72" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="rzJ-6q-Gbc"/>
@@ -211,6 +167,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Weeks" id="cgc-OH-8rI"/>
+                    <connections>
+                        <outlet property="studentTable" destination="fOA-YM-Zi1" id="2LQ-MU-iSk"/>
+                        <outlet property="weekNumberLabel" destination="LNn-eC-IgH" id="O8x-nd-CkM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -501,6 +461,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c5b-WC-jAN">
                                             <rect key="frame" x="241" y="27" width="141" height="48"/>
                                             <color key="backgroundColor" name="AccentColor"/>
+                                            <accessibility key="accessibilityConfiguration" identifier="enterUnitButton"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                             <state key="normal" title=" Enter Unit ">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -519,6 +480,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="enterUnitButton" destination="c5b-WC-jAN" id="q0K-Vt-Auy"/>
                                     <outlet property="unitNameLabel" destination="TZI-lP-DjG" id="AHC-jb-mLD"/>
                                 </connections>
                             </tableViewCell>
@@ -598,9 +560,6 @@
             <point key="canvasLocation" x="3186.9565217391305" y="346.875"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="Xe7-TH-uWh"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <namedColor name="AccentColor">

@@ -5,4 +5,14 @@
 //  Created by Swift Labourer on 11/5/21.
 //
 
-import Foundation
+
+import Firebase
+import FirebaseFirestoreSwift
+
+public struct Student : Codable{
+    var attended: Bool
+    var doc_id: String?
+    var grade: String
+    var studentID: String
+    var studentName: String
+}

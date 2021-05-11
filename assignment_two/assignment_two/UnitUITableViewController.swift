@@ -13,10 +13,11 @@ class UnitUITableViewController: UITableViewController {
 
     var units = [Unit]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+            
         let db = Firestore.firestore()
         let unitCollection = db.collection("units")
         
@@ -86,10 +87,42 @@ class UnitUITableViewController: UITableViewController {
         if let unitCell = cell as? UnitUITableViewCell
         {
             unitCell.unitNameLabel.text = unit.unitname
+            unitCell.enterUnitButton.tag = indexPath.row
         }
 
         
         return cell
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "moveToClass"
+        {
+          
+            guard let weeksViewController = segue.destination as? WeeksViewController else
+            {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedUnitCellButton = sender as? UIButton else
+            {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+//            guard let indexPath = tableView[selectedUnitCellButton.tag] else
+//            {
+//                fatalError("The selected cell is not being displayed by the table")
+//            }
+            
+            let indexPath = selectedUnitCellButton.tag
+            
+            let selectedUnit = units[indexPath]
+            
+            weeksViewController.unit = selectedUnit
+            weeksViewController.unitIndex = indexPath
+            
+        }
     }
     
     /*

@@ -9,4 +9,8 @@
 import Firebase
 import FirebaseFirestoreSwift
 
-
+public struct Week : Codable{
+    var id : String
+    var unitCode : String
+    var weekNumber : Int32
+}
