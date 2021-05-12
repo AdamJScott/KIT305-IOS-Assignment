@@ -79,6 +79,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Last"/>
+                                <connections>
+                                    <action selector="lastWeekPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Ue-FZ-FvI"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v0x-xa-yaT">
                                 <rect key="frame" x="333" y="104" width="65" height="48"/>
@@ -87,8 +90,11 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="nextWeekPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5TE-7q-R7K"/>
+                                </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Qh0-BB-BZ3">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="Qh0-BB-BZ3">
                                 <rect key="frame" x="16" y="206" width="382" height="32"/>
                                 <segments>
                                     <segment title="Ascending"/>
@@ -103,7 +109,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a student" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raa-Dj-dTo">
                                 <rect key="frame" x="16" y="156" width="382" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cB-jM-Ppg">
                                 <rect key="frame" x="16" y="653" width="181" height="46"/>
@@ -112,6 +118,9 @@
                                 <state key="normal" title=" Add a student ">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="addStudentPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ags-1m-Pe2"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOK-R2-c72">
                                 <rect key="frame" x="16" y="715" width="209" height="46"/>
@@ -120,6 +129,9 @@
                                 <state key="normal" title=" Delete a student ">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="deleteStudentPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vfO-SL-GsR"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0j-BD-1kr">
                                 <rect key="frame" x="239" y="715" width="159" height="46"/>
@@ -136,6 +148,9 @@
                                 <state key="normal" title=" Email report ">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="emailReportPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TrH-mo-2q7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -168,6 +183,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Weeks" id="cgc-OH-8rI"/>
                     <connections>
+                        <outlet property="lastButton" destination="rah-UC-b2g" id="f6T-XR-u93"/>
+                        <outlet property="nextButton" destination="v0x-xa-yaT" id="j21-1w-LJP"/>
                         <outlet property="studentTable" destination="fOA-YM-Zi1" id="2LQ-MU-iSk"/>
                         <outlet property="weekNumberLabel" destination="LNn-eC-IgH" id="O8x-nd-CkM"/>
                     </connections>
