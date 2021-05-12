@@ -24,36 +24,44 @@
                                     <constraint firstAttribute="height" constant="400" id="XQC-w3-dfY"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="au.edu.utas.ios.StudentCell" rowHeight="45" id="erq-FM-CaM" customClass="StudentUITableViewCell" customModule="assignment_two" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="382" height="45"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="au.edu.utas.ios.StudentCell" id="erq-FM-CaM" customClass="StudentUITableViewCell" customModule="assignment_two" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="382" height="42.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="erq-FM-CaM" id="YVA-gu-0MU">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="42.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XB5-cv-1oc">
-                                                    <rect key="frame" x="16" y="0.0" width="121.5" height="45"/>
+                                                    <rect key="frame" x="16" y="0.0" width="121.5" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hTe-0g-veq">
-                                                    <rect key="frame" x="298.5" y="4" width="67.5" height="37"/>
+                                                    <rect key="frame" x="298.5" y="4" width="67.5" height="34.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student ID " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aC0-Hr-zo6">
+                                                    <rect key="frame" x="28" y="23" width="74" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="XB5-cv-1oc" secondAttribute="bottom" id="2Kz-yq-qgJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="hTe-0g-veq" secondAttribute="trailing" constant="16" id="6Om-T6-GBo"/>
                                                 <constraint firstItem="XB5-cv-1oc" firstAttribute="leading" secondItem="YVA-gu-0MU" secondAttribute="leading" constant="16" id="EIg-8U-pQ7"/>
+                                                <constraint firstItem="aC0-Hr-zo6" firstAttribute="leading" secondItem="YVA-gu-0MU" secondAttribute="leadingMargin" constant="8" id="RB6-TN-jVx"/>
                                                 <constraint firstAttribute="bottom" secondItem="hTe-0g-veq" secondAttribute="bottom" constant="4" id="YHE-us-dwb"/>
                                                 <constraint firstItem="XB5-cv-1oc" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" id="krK-xf-JFZ"/>
                                                 <constraint firstItem="hTe-0g-veq" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" constant="4" id="pPO-s3-9SE"/>
+                                                <constraint firstItem="aC0-Hr-zo6" firstAttribute="top" secondItem="XB5-cv-1oc" secondAttribute="bottom" id="sR1-nN-8lb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="studentGradeField" destination="hTe-0g-veq" id="m3e-Pq-pjX"/>
+                                            <outlet property="studentIDLabel" destination="aC0-Hr-zo6" id="8C4-x7-OcN"/>
                                             <outlet property="studentNameLabel" destination="XB5-cv-1oc" id="Wea-zS-4b6"/>
                                         </connections>
                                     </tableViewCell>

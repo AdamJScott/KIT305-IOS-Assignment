@@ -13,6 +13,8 @@ class StudentUITableViewCell: UITableViewCell {
     
     @IBOutlet var studentGradeField: UITextField!
     
+    @IBOutlet var studentIDLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -6,7 +6,7 @@
 //
 
 
-//TODO ADD STUDENT
+//TODO ADD STUDENT - IMPLEMENTED, but add an alert for failure to tell the user what happened
 //TODO DELETE STUDENT
 //TODO GRADE STUDENT WITH HD DN CR PP NN
 //TODO CHANGE GRADE SCHEMES THAT RESET GRADES
@@ -86,8 +86,9 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                         switch conversionResultStu
                                         {
                                         case .success(let conversionDoc):
-                                            if let student = conversionDoc
+                                            if var student = conversionDoc
                                             {
+                                                student.doc_id = document.documentID
                                                 print("Student found: \(student.studentName)")
                                                 self.studentsInWeek.append(student)
                                             }
@@ -176,9 +177,9 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                             switch conversionResultStu
                                             {
                                             case .success(let conversionDoc):
-                                                if let student = conversionDoc
+                                                if var student = conversionDoc
                                                 {
-                                                    print("Student found: \(student.studentName)")
+                                                    student.doc_id = document.documentID
                                                     self.studentsInWeek.append(student)
                                                 }
                                             
@@ -263,9 +264,9 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                             switch conversionResultStu
                                             {
                                             case .success(let conversionDoc):
-                                                if let student = conversionDoc
+                                                if var student = conversionDoc
                                                 {
-                                                    print("Student found: \(student.studentName)")
+                                                    student.doc_id = document.documentID
                                                     self.studentsInWeek.append(student)
                                                 }
                                             
@@ -335,14 +336,15 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
         }))
         
-        addAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { [weak addAlert] (_) in
+        addAlert.addAction(UIAlertAction(title: "Add", style: .default, handler: { [self, weak addAlert] (_) in
             textFieldName = (addAlert?.textFields![0])!
             textFieldID = (addAlert?.textFields![1])!
             
             //TODO CHECK IF ID IS PURELY A NUMBER
             let idNumber = Int((textFieldID?.text)!) ?? -1
             
-            if (idNumber != -1){
+            if (idNumber != -1)
+            {
                 //If exists, dont add
                 if (
                     (self.studentsInWeek.contains(where: { id in id.studentID == textFieldID?.text}))
@@ -358,22 +360,85 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     print("ID cannot be empty")
                 }
                 
+            
+                
                 //If gotten here, it should be okay to add
                 else{
                     
+                    //Create the student
+                    var newStu = Student(attended: false, doc_id: "", grade: "", studentID: (textFieldID?.text)!, studentName: (textFieldName?.text)!)
                     
-                    print(textFieldName?.text!)
-                    print(textFieldID?.text!)
+                    let db = Firestore.firestore()
+                    
+                    
+                    
+                    
+                    
+                    for n in self.currentWeek...Int(self.unit!.numberOfWeeks)
+                    {
+                        //ADD EACH WEEK
+                        print("Adding to \(n)")
+                        let weekCollection = db.collection("units").document(unit!.id).collection("weeks").whereField("weekNumber", isEqualTo: n).getDocuments()
+                        { (result, err) in
+                            if let err = err
+                            {
+                                print("error getting week: \(err)")
+                            }
+                            else
+                            {
+                                for document in result!.documents
+                                {
+                                    let conversionResult = Result{
+                                        try document.data(as: Week.self)
+                                    }
+                                        
+                                    switch conversionResult
+                                    {
+                                        case .success (let convertedDoc):
+                                            if var week = convertedDoc{
+                                                //Found week to add to
+                                                
+                                                week.id = document.documentID
+                                                
+                                                do {
+                                                    let studentCollection = try db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").addDocument(from: newStu, completion: {(err) in
+                                                        
+                                                    if let err = err {
+                                                        print("Error adding student \(newStu)")
+                                                    }
+                                                    else{
+                                                        print("Added student")
+    
+                                                        if (self.currentWeek == n){
+                                                            studentsInWeek.append(newStu)
+                                                            self.studentTable.reloadData()
+                                                        }
+                                                        
+                                                    }
+                                                
+                                                })
+                                                } catch let error {
+                                                    print("Error writing student to firestore: \(error)")
+                                                }
+                                            }
+                                    
+                                            
+                                        case .failure(let error):
+                                            print("Error getting week: \(error)")
+                                    }
+                            
+                                }
+                        
+                            }
+                        }
+                    }
+                 
                 }
             }
             else{
                 //TODO error, ID is not a number
                 print("ID NUMBER IS NOT A NUMBER")
             }
-            
-            
-            
-            
         }))
         
         self.present(addAlert, animated: true, completion: nil)
@@ -381,10 +446,17 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
         
     @IBAction func deleteStudentPressed(_ sender: Any) {
+        
+        //TODO implement
+        //As the student object knows it's own documentID, a call can be removed
+        
+        
     }
     
     
     @IBAction func emailReportPressed(_ sender: Any) {
+        
+        //TODO implement
     }
     
     
@@ -412,6 +484,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         if let studentCell = cell as? StudentUITableViewCell
         {
             studentCell.studentNameLabel.text = student.studentName
+            studentCell.studentIDLabel.text = student.studentID
             studentCell.studentGradeField.text = student.grade
         }
         
