@@ -29,11 +29,18 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var nextButton: UIButton!
     
+    @IBOutlet var searchText: UITextField!
+    
+    
+
     
     var unit: Unit?
     var unitIndex: Int?
     
     var studentsInWeek = [Student]()//Holds the list of students found within current week
+    
+    var oldListStudent = [Student]()//Holds a copy of studentsInWeek
+    
     var currentWeek = 1
     var WeekObjID: String!
     
@@ -128,6 +135,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBAction func nextWeekPressed(_ sender: Any) {
         
+        searchText.text = ""
+        
         if (currentWeek < unit!.numberOfWeeks)
         {
             lastButton.isEnabled = false
@@ -215,6 +224,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     @IBAction func lastWeekPressed(_ sender: Any) {
+        
+        searchText.text = ""
         
         if (currentWeek != 1 ){
             
@@ -330,7 +341,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         var textFieldID: UITextField?
         
         addAlert.addTextField{ (textFieldNameIn) in textFieldNameIn.placeholder = "Enter name here"; textFieldNameIn.returnKeyType = UIReturnKeyType.continue}
-        addAlert.addTextField{ (textFieldIDIn) in textFieldIDIn.placeholder = "Enter id here"; textFieldIDIn.keyboardType = UIKeyboardType.numberPad; textFieldIDIn.returnKeyType = UIReturnKeyType.continue}
+        addAlert.addTextField{ (textFieldIDIn) in textFieldIDIn.placeholder = "Enter ID here"; textFieldIDIn.keyboardType = UIKeyboardType.numberPad; textFieldIDIn.returnKeyType = UIReturnKeyType.continue}
         
         addAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {[weak addAlert] (_) in
             
@@ -369,11 +380,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     var newStu = Student(attended: false, doc_id: "", grade: "", studentID: (textFieldID?.text)!, studentName: (textFieldName?.text)!)
                     
                     let db = Firestore.firestore()
-                    
-                    
-                    
-                    
-                    
+
                     for n in self.currentWeek...Int(self.unit!.numberOfWeeks)
                     {
                         //ADD EACH WEEK
@@ -449,6 +456,141 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         //TODO implement
         //As the student object knows it's own documentID, a call can be removed
+        let delAlert = UIAlertController(title: "Delete student", message: "Enter student ID", preferredStyle: .alert)
+        
+        var textFieldName: UITextField!
+        var textFieldID: UITextField!
+        
+        delAlert.addTextField{ (textFieldIDIn) in textFieldIDIn.placeholder = "Enter ID here"; textFieldIDIn.keyboardType = UIKeyboardType.numberPad; textFieldIDIn.returnKeyType = UIReturnKeyType.continue}
+        
+        delAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {[weak delAlert] (_) in
+            
+            }))
+        
+        delAlert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: {[weak delAlert] (_) in
+            
+            //CONFIRMATION SCREEN
+            
+            
+            textFieldID = (delAlert?.textFields![0])!
+            
+            
+            //CHECK IF EXISTS
+            if ((self.studentsInWeek.contains(where: { id in id.studentID == textFieldID?.text}))){
+                var stu_to_del = self.studentsInWeek[self.studentsInWeek.firstIndex(where:  {id in id.studentID == textFieldID?.text})!]
+                
+                let delConfirm = UIAlertController(title: "Confirm deletion of \(stu_to_del.studentName)", message: "Confirm deletion of student with ID \(stu_to_del.studentID)? \nCaution there is no undo", preferredStyle: .alert )
+                
+                delConfirm.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {[weak delAlert] (_) in
+                    
+                }))
+                
+                delConfirm.addAction(UIAlertAction(title: "Confirm deletion", style: .destructive, handler: {[weak delAlert] (_) in
+                    
+                    //Delete student
+                    print("delete student TODO")
+                    //TODO
+                    
+                    for n in self.currentWeek...Int(self.unit!.numberOfWeeks)
+                    {
+                        print("Adding to \(n)")
+                        let db = Firestore.firestore()
+                        let weekCollection = db.collection("units").document(self.unit!.id).collection("weeks").whereField("weekNumber", isEqualTo: n).getDocuments()
+                        { (result, err) in
+                            if let err = err
+                            {
+                                print("error getting week: \(err)")
+                            }
+                            else
+                            {
+                                for document in result!.documents
+                                {
+                                    let conversionResult = Result{
+                                        try document.data(as: Week.self)
+                                    }
+                                        
+                                    switch conversionResult
+                                    {
+                                        case .success (let convertedDoc):
+                                            if var week = convertedDoc{
+                                                //Found week to delete from
+                                                
+                                                week.id = document.documentID
+                                                
+                                                do {
+                                                    let studentCollection = try db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").document(stu_to_del.doc_id!).delete()
+                                                    {err in
+                                                        
+                                                        if let err = err {
+                                                            print("Error delete student \(stu_to_del.studentName)")
+                                                        }
+                                                        else{
+                                                            print("deleted student")
+    
+                                                        if (self.currentWeek == n){
+                                                            
+                                                            self.studentsInWeek.remove(at: self.studentsInWeek.firstIndex(where:  {id in id.studentID == textFieldID?.text})!)
+                                                           
+                                                            
+                                                            
+                                                            self.studentTable.reloadData()
+                                                            }
+                                                        }
+                                                    }
+                                                
+                                                }
+                                                catch let error {
+                                                    print("Error writing student to firestore: \(error)")
+                                                }
+                                            }
+                                    
+                                            
+                                        case .failure(let error):
+                                            print("Error getting week: \(error)")
+                                    }
+                            
+                                }
+                        
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                
+                
+                }))
+                
+                self.present(delConfirm, animated: true, completion: nil)
+            }
+            //If doesnt exist
+            else{
+                var text = textFieldID.text!
+                
+                var stringToShow: String!
+                
+                //Change the string if it's empty
+                if (text.isEmpty){
+                    stringToShow = "Please enter an ID"
+                }
+                else{
+                    stringToShow = "ID of \(text) did not match any students"
+                }
+                
+                let delConfirm = UIAlertController(title: "Student doesn't exist in class", message: stringToShow, preferredStyle: .alert )
+                
+                delConfirm.addAction(UIAlertAction(title: "Go back", style: .cancel, handler: {[weak delAlert] (_) in
+                    
+                }))
+                
+                self.present(delConfirm, animated: true, completion: nil)
+            }
+                  
+        }))
+        
+        self.present(delAlert, animated: true, completion: nil)
+        
+        
         
         
     }
@@ -457,6 +599,107 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBAction func emailReportPressed(_ sender: Any) {
         
         //TODO implement
+    }
+    
+    
+    @IBAction func enteredSearch(_ sender: Any) {
+        searchText.text = ""
+        oldListStudent.removeAll()
+        
+        
+        let db = Firestore.firestore()
+        let weekCollection = db.collection("units").document(unit!.id).collection("weeks").whereField("weekNumber", isEqualTo: currentWeek).getDocuments()
+        { (result, err) in
+            if let err = err
+            {
+                print("error getting week: \(err)")
+            }
+            
+            else{
+                for document in result!.documents
+                {
+                    let conversionResult = Result{
+                        try document.data(as: Week.self)
+                    }
+                    
+                    switch conversionResult
+                    {
+                    case .success (let convertedDoc):
+                        if var week = convertedDoc
+                        {
+                            week.id = document.documentID
+                            self.WeekObjID = document.documentID
+                            print("WeekID found: \(week.id)")
+                            
+                            let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(self.WeekObjID!).collection("students").getDocuments()
+                            { [self] (resultStu, err) in
+                                if let err = err{
+                                    print("Error getting student \(err)")
+                                }
+                                
+                                else
+                                {
+                                    for document in resultStu!.documents
+                                    {
+                                        let conversionResultStu = Result{ try document.data(as: Student.self)}
+                                        
+                                        switch conversionResultStu
+                                        {
+                                        case .success(let conversionDoc):
+                                            if var student = conversionDoc
+                                            {
+                                                student.doc_id = document.documentID
+                                                print("Student found: \(student.studentName)")
+                                                self.oldListStudent.append(student)
+                                            }
+                                        
+                                        case .failure(let error):
+                                            print("Error getting student: \(error)")
+                                        }
+                                    }
+                                    self.studentsInWeek = self.oldListStudent
+                                    self.studentTable.reloadData()
+                                    //No need to reload info
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    case .failure(let error):
+                        print("error decoding the week: \(error)")
+                    
+                    }
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    //Search function
+    @IBAction func searchEntered(_ sender: Any) {
+        print("searchEntered")
+        
+        
+        
+        if (searchText.text!.isEmpty){
+            studentsInWeek.removeAll()
+            studentsInWeek = oldListStudent
+        }
+        else{
+            
+            studentsInWeek = oldListStudent.filter {$0.studentName.lowercased().contains((searchText!.text?.lowercased())!)}
+            
+            
+        }
+        
+        self.studentTable.reloadData()
+
+        
+        self.view.endEditing(true)
     }
     
     
@@ -486,6 +729,10 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             studentCell.studentNameLabel.text = student.studentName
             studentCell.studentIDLabel.text = student.studentID
             studentCell.studentGradeField.text = student.grade
+            
+            //Store the indexrow to know who to save
+            studentCell.studentGradeField.tag = indexPath.row
+            
         }
         
         

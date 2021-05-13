@@ -118,6 +118,10 @@
                                 <rect key="frame" x="16" y="156" width="382" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <connections>
+                                    <action selector="enteredSearch:" destination="BYZ-38-t0r" eventType="touchDown" id="npf-BM-CbP"/>
+                                    <action selector="searchEntered:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Avv-1t-pdg"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cB-jM-Ppg">
                                 <rect key="frame" x="16" y="653" width="181" height="46"/>
@@ -193,6 +197,7 @@
                     <connections>
                         <outlet property="lastButton" destination="rah-UC-b2g" id="f6T-XR-u93"/>
                         <outlet property="nextButton" destination="v0x-xa-yaT" id="j21-1w-LJP"/>
+                        <outlet property="searchText" destination="raa-Dj-dTo" id="oL6-sK-Sxn"/>
                         <outlet property="studentTable" destination="fOA-YM-Zi1" id="2LQ-MU-iSk"/>
                         <outlet property="weekNumberLabel" destination="LNn-eC-IgH" id="O8x-nd-CkM"/>
                     </connections>
