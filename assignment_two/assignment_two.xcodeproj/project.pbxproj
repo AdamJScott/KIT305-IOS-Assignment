@@ -20,7 +20,7 @@
 		86B595FC263A2E7F00E9EA60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B595FA263A2E7F00E9EA60 /* Main.storyboard */; };
 		86B595FE263A2E8500E9EA60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86B595FD263A2E8500E9EA60 /* Assets.xcassets */; };
 		86B59601263A2E8500E9EA60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86B595FF263A2E8500E9EA60 /* LaunchScreen.storyboard */; };
-		86F0D1902640DE1E001D88C4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86F0D18F2640DE1E001D88C4 /* GoogleService-Info.plist */; };
+		86F9083F264E3F7E0089AFC0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86F9083E264E3F7D0089AFC0 /* GoogleService-Info.plist */; };
 		D206F403DD615B2565BB4DE1 /* Pods_assignment_two.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2137E84D5C352DC64A059868 /* Pods_assignment_two.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,7 @@
 		86B595FD263A2E8500E9EA60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86B59600263A2E8500E9EA60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		86B59602263A2E8500E9EA60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		86F0D18F2640DE1E001D88C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		86F9083E264E3F7D0089AFC0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,13 +89,13 @@
 			children = (
 				86B595F4263A2E7F00E9EA60 /* AppDelegate.swift */,
 				86B595F6263A2E7F00E9EA60 /* SceneDelegate.swift */,
-				86F0D18F2640DE1E001D88C4 /* GoogleService-Info.plist */,
 				86B595F8263A2E7F00E9EA60 /* ViewController.swift */,
 				86B595FA263A2E7F00E9EA60 /* Main.storyboard */,
 				86537DFF264A029100CD5129 /* StudentUITableViewCell.swift */,
 				86537DF92649F8F500CD5129 /* WeeksViewController.swift */,
 				86537DFB264A00C300CD5129 /* Week.swift */,
 				86537DFD264A010C00CD5129 /* Student.swift */,
+				86F9083E264E3F7D0089AFC0 /* GoogleService-Info.plist */,
 				860F25162648F4E400A15FBD /* UnitUITableViewCell.swift */,
 				860F25182648F5D500A15FBD /* UnitUITableViewController.swift */,
 				860F251A2648F6A800A15FBD /* Unit.swift */,
@@ -175,7 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				86B59601263A2E8500E9EA60 /* LaunchScreen.storyboard in Resources */,
-				86F0D1902640DE1E001D88C4 /* GoogleService-Info.plist in Resources */,
+				86F9083F264E3F7E0089AFC0 /* GoogleService-Info.plist in Resources */,
 				86B595FE263A2E8500E9EA60 /* Assets.xcassets in Resources */,
 				86B595FC263A2E7F00E9EA60 /* Main.storyboard in Resources */,
 			);

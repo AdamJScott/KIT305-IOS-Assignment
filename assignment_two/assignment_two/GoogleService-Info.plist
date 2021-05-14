@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>626236808700-80vdkfvqbol7srdmn9o2q650basl2o6p.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.626236808700-80vdkfvqbol7srdmn9o2q650basl2o6p</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDgM6B43MbtzYYOHo_MGEdIPjT-xn8lrjE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>626236808700</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>au.utas.edu.ajscott1.ios</string>
+	<key>PROJECT_ID</key>
+	<string>au-edu-utas-ajscott1-android</string>
+	<key>STORAGE_BUCKET</key>
+	<string>au-edu-utas-ajscott1-android.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:626236808700:ios:fd7d61c925e57539d1a679</string>
+</dict>
+</plist>

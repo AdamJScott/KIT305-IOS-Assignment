@@ -15,6 +15,8 @@ class StudentUITableViewCell: UITableViewCell {
     
     @IBOutlet var studentIDLabel: UILabel!
     
+    @IBOutlet var gradeStepper: UIStepper!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

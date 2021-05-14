@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fOA-YM-Zi1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fOA-YM-Zi1">
                                 <rect key="frame" x="16" y="237" width="382" height="400"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -25,10 +25,10 @@
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="au.edu.utas.ios.StudentCell" id="erq-FM-CaM" customClass="StudentUITableViewCell" customModule="assignment_two" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="24.5" width="382" height="42.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="382" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="erq-FM-CaM" id="YVA-gu-0MU">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="42.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XB5-cv-1oc">
@@ -37,29 +37,41 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hTe-0g-veq">
-                                                    <rect key="frame" x="298.5" y="4" width="67.5" height="34.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student ID " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aC0-Hr-zo6">
-                                                    <rect key="frame" x="28" y="23" width="74" height="18"/>
+                                                    <rect key="frame" x="28" y="21" width="74" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" continuous="NO" wraps="YES" maximumValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="dLp-Mx-5S0">
+                                                    <rect key="frame" x="288" y="10" width="94" height="32"/>
+                                                    <connections>
+                                                        <action selector="gradeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ecM-C4-3hU"/>
+                                                    </connections>
+                                                </stepper>
+                                                <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hTe-0g-veq">
+                                                    <rect key="frame" x="248.5" y="4" width="39.5" height="42"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="g0S-fr-l5e"/>
+                                                    </connections>
+                                                </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="hTe-0g-veq" secondAttribute="trailing" constant="16" id="6Om-T6-GBo"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="aC0-Hr-zo6" secondAttribute="bottom" id="ARg-8p-ZfT"/>
                                                 <constraint firstItem="XB5-cv-1oc" firstAttribute="leading" secondItem="YVA-gu-0MU" secondAttribute="leading" constant="16" id="EIg-8U-pQ7"/>
+                                                <constraint firstAttribute="bottom" secondItem="dLp-Mx-5S0" secondAttribute="bottom" constant="8" id="JIe-If-eYT"/>
                                                 <constraint firstItem="aC0-Hr-zo6" firstAttribute="leading" secondItem="YVA-gu-0MU" secondAttribute="leadingMargin" constant="8" id="RB6-TN-jVx"/>
                                                 <constraint firstAttribute="bottom" secondItem="hTe-0g-veq" secondAttribute="bottom" constant="4" id="YHE-us-dwb"/>
+                                                <constraint firstAttribute="trailing" secondItem="dLp-Mx-5S0" secondAttribute="trailing" id="cSC-Dd-j1f"/>
+                                                <constraint firstItem="dLp-Mx-5S0" firstAttribute="leading" secondItem="hTe-0g-veq" secondAttribute="trailing" id="cWp-gZ-xJ6"/>
                                                 <constraint firstItem="XB5-cv-1oc" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" id="krK-xf-JFZ"/>
                                                 <constraint firstItem="hTe-0g-veq" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" constant="4" id="pPO-s3-9SE"/>
-                                                <constraint firstItem="aC0-Hr-zo6" firstAttribute="top" secondItem="XB5-cv-1oc" secondAttribute="bottom" id="sR1-nN-8lb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="gradeStepper" destination="dLp-Mx-5S0" id="JC4-OH-mt9"/>
                                             <outlet property="studentGradeField" destination="hTe-0g-veq" id="m3e-Pq-pjX"/>
                                             <outlet property="studentIDLabel" destination="aC0-Hr-zo6" id="8C4-x7-OcN"/>
                                             <outlet property="studentNameLabel" destination="XB5-cv-1oc" id="Wea-zS-4b6"/>
@@ -164,15 +176,27 @@
                                     <action selector="emailReportPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TrH-mo-2q7"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ns6-7A-H2v">
+                                <rect key="frame" x="48" y="777" width="317" height="46"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <color key="tintColor" systemColor="systemBlueColor"/>
+                                <state key="normal" title=" Change Marking Scheme ">
+                                    <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="changeSchemeClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Fu-OD-0lY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="raa-Dj-dTo" firstAttribute="top" secondItem="LNn-eC-IgH" secondAttribute="bottom" constant="16" id="0aO-7C-MsC"/>
                             <constraint firstItem="v0x-xa-yaT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="1a1-cu-IvJ"/>
                             <constraint firstItem="fOA-YM-Zi1" firstAttribute="top" secondItem="Qh0-BB-BZ3" secondAttribute="bottom" id="48z-er-jET"/>
                             <constraint firstItem="gOK-R2-c72" firstAttribute="top" secondItem="1cB-jM-Ppg" secondAttribute="bottom" constant="16" id="63r-n8-VXV"/>
                             <constraint firstItem="Qh0-BB-BZ3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="820-Rg-Qrd"/>
+                            <constraint firstItem="Ns6-7A-H2v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="48" id="8Gf-S1-Nj9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v0x-xa-yaT" secondAttribute="trailing" constant="16" id="ALD-lU-jUt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="raa-Dj-dTo" secondAttribute="trailing" constant="16" id="BXw-zD-TTu"/>
                             <constraint firstItem="S0j-BD-1kr" firstAttribute="top" secondItem="Opf-5I-sbl" secondAttribute="bottom" constant="16" id="Ng8-y0-S04"/>
@@ -182,6 +206,8 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Opf-5I-sbl" secondAttribute="trailing" constant="16" id="Tnn-9J-Y9M"/>
                             <constraint firstItem="LNn-eC-IgH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VLh-QM-1cg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fOA-YM-Zi1" secondAttribute="trailing" constant="16" id="WoQ-We-rBy"/>
+                            <constraint firstItem="raa-Dj-dTo" firstAttribute="top" secondItem="LNn-eC-IgH" secondAttribute="bottom" constant="16" id="Wqm-yY-WKy"/>
+                            <constraint firstItem="Ns6-7A-H2v" firstAttribute="top" secondItem="S0j-BD-1kr" secondAttribute="bottom" constant="16" id="Z8c-G5-8ft"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S0j-BD-1kr" secondAttribute="trailing" constant="16" id="fUE-3g-Ty8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qh0-BB-BZ3" secondAttribute="trailing" constant="16" id="iQl-G0-loH"/>
                             <constraint firstItem="raa-Dj-dTo" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="ihw-GQ-rS2"/>

@@ -31,7 +31,11 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet var searchText: UITextField!
     
+    var hd_Gradelist = ["UG", "NN", "PP", "CR", "DN", "HD"]
+    var a_Gradelist = ["UG","F","D","C","B","A"]
+    var chk_Gradelist = [String]()
     
+
 
     
     var unit: Unit?
@@ -43,6 +47,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     var currentWeek = 1
     var WeekObjID: String!
+    var gradeStyle: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +81,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                         {
                             week.id = document.documentID
                             self.WeekObjID = document.documentID
-                            print("WeekID found: \(week.id)")
+                            self.gradeStyle = week.gradeScheme
                             
                             let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(self.WeekObjID!).collection("students").getDocuments()
                             { (resultStu, err) in
@@ -169,6 +174,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                             {
                                 week.id = document.documentID
                                 self.WeekObjID = document.documentID
+                                self.gradeStyle = week.gradeScheme
                                 print("WeekID found: \(week.id)")
                                 
                                 let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(self.WeekObjID!).collection("students").getDocuments()
@@ -258,6 +264,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                             {
                                 week.id = document.documentID
                                 self.WeekObjID = document.documentID
+                                self.gradeStyle = week.gradeScheme
                                 print("WeekID found: \(week.id)")
                                 
                                 let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(self.WeekObjID!).collection("students").getDocuments()
@@ -377,7 +384,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 else{
                     
                     //Create the student
-                    var newStu = Student(attended: false, doc_id: "", grade: "", studentID: (textFieldID?.text)!, studentName: (textFieldName?.text)!)
+                    var newStu = Student(attended: false, doc_id: "", grade: "UG", studentID: (textFieldID?.text)!, studentName: (textFieldName?.text)!)
                     
                     let db = Firestore.firestore()
 
@@ -493,7 +500,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     
                     for n in self.currentWeek...Int(self.unit!.numberOfWeeks)
                     {
-                        print("Adding to \(n)")
+
                         let db = Firestore.firestore()
                         let weekCollection = db.collection("units").document(self.unit!.id).collection("weeks").whereField("weekNumber", isEqualTo: n).getDocuments()
                         { (result, err) in
@@ -722,15 +729,84 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let cell = tableView.dequeueReusableCell(withIdentifier: "au.edu.utas.ios.StudentCell", for: indexPath)
         
         
-        let student = studentsInWeek[indexPath.row]
+        var student = studentsInWeek[indexPath.row]
         
         if let studentCell = cell as? StudentUITableViewCell
         {
             studentCell.studentNameLabel.text = student.studentName
             studentCell.studentIDLabel.text = student.studentID
-            studentCell.studentGradeField.text = student.grade
             
+            //var grade: String!
+            
+            studentCell.studentGradeField.borderStyle = .none
+            studentCell.studentGradeField.isEnabled = false
+            
+            var stu_grade: String!
+            
+            switch (gradeStyle){
+            case "hd":
+                studentCell.gradeStepper.value = Double(hd_Gradelist.firstIndex(of: student.grade)!)
+                studentCell.gradeStepper.maximumValue = Double(hd_Gradelist.count - 1)
+                
+                stu_grade = student.grade
+                
+                break
+            case "a":
+                studentCell.gradeStepper.value = Double(a_Gradelist.firstIndex(of: student.grade)!)
+                studentCell.gradeStepper.maximumValue = Double(a_Gradelist.count - 1)
+                
+                stu_grade = student.grade
+                break
+            case "chk":
+                
+                var value: Int!
+                
+                if(student.grade == "UG"){
+                    value = 0
+                }
+                else{
+                    value = Int(student.grade)
+                }
+                
+                studentCell.gradeStepper.value = Double(value)
+                studentCell.gradeStepper.maximumValue = Double(chk_Gradelist.count - 1)
+                
+                stu_grade = String(value)
+                break
+            case "num":
+                
+                var value: Int!
+                
+                if(student.grade == "UG"){
+                    value = 0
+                }
+                else{
+                    value = Int(student.grade)
+                }
+                
+                studentCell.gradeStepper.value = Double(value)
+                studentCell.gradeStepper.maximumValue = 100
+                
+                studentCell.studentGradeField.borderStyle = .bezel
+                studentCell.studentGradeField.isEnabled = true
+                
+                stu_grade = String(studentCell.gradeStepper.value)
+                
+                break
+            default:
+                studentCell.gradeStepper.value = 0
+                
+                studentCell.studentGradeField.borderStyle = .bezel
+                studentCell.studentGradeField.isEnabled = true
+                
+                stu_grade = String(0)
+            }
+            
+            print("student: \(student.studentName) uhh steppvalue is: \(studentCell.gradeStepper.value) Stepmax \(studentCell.gradeStepper.maximumValue)")
+            studentCell.studentGradeField.text = stu_grade
+                
             //Store the indexrow to know who to save
+            studentCell.gradeStepper.tag = indexPath.row
             studentCell.studentGradeField.tag = indexPath.row
             
         }
@@ -739,6 +815,91 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
         
     }
+    
+
+    @IBAction func textChanged(_ sender: UITextField) {
+        print("Changed :\(sender.text)")
+    
+        /*
+            Save student's who's info changed
+         
+         
+         */
+    
+    
+        
+        
+        
+    }
+    
+    
+    
+    
+    @IBAction func changeSchemeClicked(_ sender: Any) {
+        
+        //TODO
+        /*
+            Remove all grades and set to default UG
+            Change the value of week gradeStyle to choice in spinner
+            Create the alert that holds the spinner and it's values
+         
+         
+         
+         */
+        
+    }
+    
+    
+    @IBAction func gradeChanged(_ sender: UIStepper) {
+        //print("Stepper in row: \(sender.tag) value of \(sender.value)")
+        
+        var indexPath = IndexPath(row: sender.tag, section: 0)
+        
+        if let cell = self.studentTable.cellForRow(at: indexPath) as? StudentUITableViewCell {
+            
+            //var intFromStepValue = Int(sender.value)
+            //print("\(intFromStepValue)")
+            
+            var str: String!
+            
+            switch (gradeStyle){
+            case "hd":
+                str = hd_Gradelist[Int(sender.value)]
+                break
+            case "a":
+                str = a_Gradelist[Int(sender.value)]
+                break
+            case "chk":
+                str = chk_Gradelist[Int(sender.value)]
+                break
+            case "num":
+                str = String(sender.value)
+                break
+            case .none:
+                break
+            case .some(_):
+                str = String(sender.value)
+                break
+            }
+            
+            
+            if (str == "UG"){
+                cell.studentGradeField.textColor = .systemRed
+            }
+            else{
+                cell.studentGradeField.textColor = .label
+            }
+            cell.studentGradeField.text = str
+            
+            //Required to launch event as
+            //if text is changed programmatically, it wont activate
+            cell.studentGradeField.sendActions(for: .editingChanged)
+            
+            
+        }
+    }
+
+    
 
     /*
     // MARK: - Navigation
