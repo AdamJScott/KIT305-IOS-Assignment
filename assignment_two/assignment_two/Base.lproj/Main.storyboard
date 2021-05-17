@@ -50,7 +50,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Grade" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hTe-0g-veq">
-                                                    <rect key="frame" x="248.5" y="4" width="39.5" height="42"/>
+                                                    <rect key="frame" x="240.5" y="4" width="39.5" height="42"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
@@ -65,7 +65,7 @@
                                                 <constraint firstItem="aC0-Hr-zo6" firstAttribute="leading" secondItem="YVA-gu-0MU" secondAttribute="leadingMargin" constant="8" id="RB6-TN-jVx"/>
                                                 <constraint firstAttribute="bottom" secondItem="hTe-0g-veq" secondAttribute="bottom" constant="4" id="YHE-us-dwb"/>
                                                 <constraint firstAttribute="trailing" secondItem="dLp-Mx-5S0" secondAttribute="trailing" id="cSC-Dd-j1f"/>
-                                                <constraint firstItem="dLp-Mx-5S0" firstAttribute="leading" secondItem="hTe-0g-veq" secondAttribute="trailing" id="cWp-gZ-xJ6"/>
+                                                <constraint firstItem="dLp-Mx-5S0" firstAttribute="leading" secondItem="hTe-0g-veq" secondAttribute="trailing" constant="8" id="cWp-gZ-xJ6"/>
                                                 <constraint firstItem="XB5-cv-1oc" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" id="krK-xf-JFZ"/>
                                                 <constraint firstItem="hTe-0g-veq" firstAttribute="top" secondItem="YVA-gu-0MU" secondAttribute="top" constant="4" id="pPO-s3-9SE"/>
                                             </constraints>
