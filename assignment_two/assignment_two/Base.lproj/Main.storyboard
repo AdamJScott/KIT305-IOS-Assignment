@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fOA-YM-Zi1">
-                                <rect key="frame" x="16" y="237" width="382" height="400"/>
+                                <rect key="frame" x="16" y="249" width="382" height="400"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="400" id="XQC-w3-dfY"/>
@@ -115,7 +115,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="Qh0-BB-BZ3">
-                                <rect key="frame" x="16" y="206" width="382" height="32"/>
+                                <rect key="frame" x="16" y="218" width="382" height="32"/>
                                 <segments>
                                     <segment title="Ascending"/>
                                     <segment title="Descending"/>
@@ -127,7 +127,7 @@
                                 </connections>
                             </segmentedControl>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a student" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raa-Dj-dTo">
-                                <rect key="frame" x="16" y="156" width="382" height="34"/>
+                                <rect key="frame" x="16" y="168" width="382" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                 <connections>
@@ -136,7 +136,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cB-jM-Ppg">
-                                <rect key="frame" x="16" y="653" width="181" height="46"/>
+                                <rect key="frame" x="16" y="665" width="181" height="46"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title=" Add a student ">
@@ -147,7 +147,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOK-R2-c72">
-                                <rect key="frame" x="16" y="715" width="209" height="46"/>
+                                <rect key="frame" x="16" y="727" width="209" height="46"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title=" Delete a student ">
@@ -158,15 +158,18 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0j-BD-1kr">
-                                <rect key="frame" x="239" y="715" width="159" height="46"/>
+                                <rect key="frame" x="239" y="727" width="159" height="46"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title=" View Report ">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <segue destination="jYd-dK-VXZ" kind="show" identifier="toWeekReport" id="AXL-Sn-3di"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Opf-5I-sbl">
-                                <rect key="frame" x="242" y="653" width="156" height="46"/>
+                                <rect key="frame" x="242" y="665" width="156" height="46"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title=" Email report ">
@@ -177,7 +180,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ns6-7A-H2v">
-                                <rect key="frame" x="48" y="777" width="317" height="46"/>
+                                <rect key="frame" x="48" y="789" width="317" height="46"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <color key="tintColor" systemColor="systemBlueColor"/>
@@ -188,6 +191,12 @@
                                     <action selector="changeSchemeClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Fu-OD-0lY"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r28-et-gPa">
+                                <rect key="frame" x="130" y="148" width="155" height="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -199,14 +208,15 @@
                             <constraint firstItem="Ns6-7A-H2v" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="48" id="8Gf-S1-Nj9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="v0x-xa-yaT" secondAttribute="trailing" constant="16" id="ALD-lU-jUt"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="raa-Dj-dTo" secondAttribute="trailing" constant="16" id="BXw-zD-TTu"/>
+                            <constraint firstItem="raa-Dj-dTo" firstAttribute="top" secondItem="r28-et-gPa" secondAttribute="bottom" constant="8" id="DUb-sD-pgj"/>
                             <constraint firstItem="S0j-BD-1kr" firstAttribute="top" secondItem="Opf-5I-sbl" secondAttribute="bottom" constant="16" id="Ng8-y0-S04"/>
                             <constraint firstItem="fOA-YM-Zi1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="16" id="Nj8-yN-6ss"/>
                             <constraint firstItem="1cB-jM-Ppg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="PAF-MO-eZX"/>
                             <constraint firstItem="rah-UC-b2g" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Po0-Dz-Ll0"/>
+                            <constraint firstItem="v0x-xa-yaT" firstAttribute="leading" secondItem="r28-et-gPa" secondAttribute="trailing" constant="48" id="QN5-Ry-bb7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Opf-5I-sbl" secondAttribute="trailing" constant="16" id="Tnn-9J-Y9M"/>
                             <constraint firstItem="LNn-eC-IgH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VLh-QM-1cg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fOA-YM-Zi1" secondAttribute="trailing" constant="16" id="WoQ-We-rBy"/>
-                            <constraint firstItem="raa-Dj-dTo" firstAttribute="top" secondItem="LNn-eC-IgH" secondAttribute="bottom" constant="16" id="Wqm-yY-WKy"/>
                             <constraint firstItem="Ns6-7A-H2v" firstAttribute="top" secondItem="S0j-BD-1kr" secondAttribute="bottom" constant="16" id="Z8c-G5-8ft"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S0j-BD-1kr" secondAttribute="trailing" constant="16" id="fUE-3g-Ty8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qh0-BB-BZ3" secondAttribute="trailing" constant="16" id="iQl-G0-loH"/>
@@ -215,13 +225,16 @@
                             <constraint firstItem="rah-UC-b2g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="lpb-Sr-TF5"/>
                             <constraint firstItem="Qh0-BB-BZ3" firstAttribute="top" secondItem="raa-Dj-dTo" secondAttribute="bottom" constant="16" id="oqW-TJ-OFW"/>
                             <constraint firstItem="Opf-5I-sbl" firstAttribute="top" secondItem="fOA-YM-Zi1" secondAttribute="bottom" constant="16" id="qp7-Mn-nv5"/>
+                            <constraint firstItem="r28-et-gPa" firstAttribute="top" secondItem="LNn-eC-IgH" secondAttribute="bottom" constant="8" id="qq7-hl-Oah"/>
                             <constraint firstItem="gOK-R2-c72" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="rzJ-6q-Gbc"/>
                             <constraint firstItem="1cB-jM-Ppg" firstAttribute="top" secondItem="fOA-YM-Zi1" secondAttribute="bottom" constant="16" id="ubz-EI-eLI"/>
+                            <constraint firstItem="r28-et-gPa" firstAttribute="leading" secondItem="rah-UC-b2g" secondAttribute="trailing" constant="58" id="wcQ-Mp-v1D"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Weeks" id="cgc-OH-8rI"/>
                     <connections>
                         <outlet property="lastButton" destination="rah-UC-b2g" id="f6T-XR-u93"/>
+                        <outlet property="markScheme" destination="r28-et-gPa" id="fdy-MP-dts"/>
                         <outlet property="nextButton" destination="v0x-xa-yaT" id="j21-1w-LJP"/>
                         <outlet property="searchText" destination="raa-Dj-dTo" id="oL6-sK-Sxn"/>
                         <outlet property="studentTable" destination="fOA-YM-Zi1" id="2LQ-MU-iSk"/>
@@ -328,7 +341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEc-U8-SGJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4097.1014492753629" y="346.875"/>
+            <point key="canvasLocation" x="3400" y="453"/>
         </scene>
         <!--StudentView-->
         <scene sceneID="l5E-oi-TWG">
@@ -596,24 +609,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ett-4e-xQz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3117" y="-684"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="sXl-iV-J5Y">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y0l-Cz-oxJ" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="M51-H7-Hzx">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="jYd-dK-VXZ" kind="relationship" relationship="rootViewController" id="YhW-00-JjU"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tqT-HM-7bI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3186.9565217391305" y="346.875"/>
         </scene>
     </scenes>
     <resources>

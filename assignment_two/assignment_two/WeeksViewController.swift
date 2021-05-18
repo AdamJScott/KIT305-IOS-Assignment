@@ -25,6 +25,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet var weekNumberLabel: UILabel!
     
+    @IBOutlet var markScheme: UILabel!
+    
     @IBOutlet weak var lastButton: UIButton!
     
     @IBOutlet weak var nextButton: UIButton!
@@ -66,7 +68,6 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.navigationItem.title = displayUnit.unitname
             
             weekNumberLabel.text = String(currentWeek)
-            
         }
 
         
@@ -128,7 +129,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                             if var student = conversionDoc
                                             {
                                                 student.doc_id = document.documentID
-                                                print("Student found: \(student.studentName)")
+                                                //print("Student found: \(student.studentName)")
                                                 self.studentsInWeek.append(student)
                                             }
                                             
@@ -142,6 +143,39 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                     
                                     //Sets the buttons
                                     self.studentTable.reloadData()
+                                    
+                                    var str = self.gradeStyle
+                                    //check for chk
+                                    if (self.gradeStyle.count >= 4){
+                                        
+                                        var strPrefix = String(self.gradeStyle!.prefix(3)).uppercased()
+                                        if (strPrefix == "CHK"){
+                                            str = "chk"
+                                        }
+                                    }
+                                    switch (str){
+                                        case "hd":
+                                            str = "HD"
+                                            break
+                                        case "a":
+                                            str = "A"
+                                            break
+                                        case "chk":
+                                            str = "Checkpoints"
+                                            break
+                                        case "att":
+                                            str = "Attendance"
+                                            break
+                                        case "num":
+                                            str = "Numeric"
+                                            break
+                                        default:
+                                            str = "None"
+                                            break
+                                    }
+                                        
+                                    
+                                    self.markScheme.text = "Scheme: \(str ?? "none")"
                                     
                                     if (self.currentWeek == self.unit!.numberOfWeeks){
                                         self.nextButton.isEnabled = false
@@ -176,7 +210,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         let db = Firestore.firestore()
         
         db.collection("units").document(unit!.id).collection("weeks").document(WeekObjID).updateData(["gradeScheme": self.gradeStyle])
-        print("GradeStyle: \(gradeStyle)")
+        //print("GradeStyle: \(gradeStyle)")
         
         for i in 0...(self.studentsInWeek.count-1) {
             let curStu = db.collection("units").document(unit!.id).collection("weeks").document(WeekObjID).collection("students").document(self.studentsInWeek[i].doc_id!).updateData(["grade":"UG"])
@@ -185,30 +219,12 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             if (i == self.studentsInWeek.count-1){
                 fetchDatabaseCall()
                 self.studentTable.reloadData()
+                self.markScheme.text = "Scheme: \(self.gradeStyle ?? "none")"
             }
         }
-        
-//        let currentWeekOfStudents = db.collection("units").document(unit!.id).collection("weeks").document(WeekObjID).collection("students").getDocuments(){ (result, err) in
-//
-//            if let err = err {
-//                print("Couldn't get students")
-//            }
-//
-//            else {
-//                for document in result!.documents{
-//                    document.updateData([
-//                        "grade": "UG"
-//                    ])
-//                }
-//
-//            }
-//
-//        }
-        
-        
-        
     }
     
+    //COMPLETE
     @IBAction func nextWeekPressed(_ sender: Any) {
         
         searchText.text = ""
@@ -228,6 +244,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    //COMPLETE
     @IBAction func lastWeekPressed(_ sender: Any) {
         
         searchText.text = ""
@@ -246,6 +263,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
+    //COMPLETE
     @IBAction func sortChange(_ sender: UISegmentedControl) {
         
                 switch (sender.selectedSegmentIndex) {
@@ -262,6 +280,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 studentTable.reloadData()
     }
 
+    //COMPLETE
     @IBAction func addStudentPressed(_ sender: Any) {
         // stackoverflow.com/questions/26567413/get-input-value-from-textfield-in-ios-alert-in-swift
         let addAlert = UIAlertController(title: "Add new student", message: "Enter student name and ID", preferredStyle: .alert)
@@ -291,13 +310,14 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 ){
                     print("ID exists")
                     //TODO Error, ID already exists
+                    self.present(confirmAlert(title: "Error", message: "ID exists in week"), animated: true, completion: nil)
                 }
                 
                 else if (textFieldName!.text!.isEmpty){
-                    print("Name cannot be empty")
+                    self.present(confirmAlert(title: "Error", message: "Name cannot be empty"), animated: true, completion: nil)
                 }
                 else if (textFieldID!.text!.isEmpty){
-                    print("ID cannot be empty")
+                    self.present(confirmAlert(title: "Error", message: "ID cannot be empty"), animated: true, completion: nil)
                 }
                 
             
@@ -313,7 +333,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     for n in self.currentWeek...Int(self.unit!.numberOfWeeks)
                     {
                         //ADD EACH WEEK
-                        print("Adding to \(n)")
+                        //print("Adding to \(n)")
                         let weekCollection = db.collection("units").document(unit!.id).collection("weeks").whereField("weekNumber", isEqualTo: n).getDocuments()
                         { (result, err) in
                             if let err = err
@@ -343,7 +363,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                                         print("Error adding student \(newStu)")
                                                     }
                                                     else{
-                                                        print("Added student")
+                                                        //print("Added student")
                                             
                                                         self.present(confirmAlert(title: "Added", message: "Confirmed addition"), animated: true, completion: nil)
                                                     }
@@ -371,6 +391,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             else{
                 //TODO error, ID is not a number
                 print("ID NUMBER IS NOT A NUMBER")
+                
+                self.present(confirmAlert(title: "Error", message: "ID number: \((textFieldID?.text)!) is not a number"), animated: true, completion: nil)
             }
         }))
           
@@ -378,6 +400,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
  
     }
         
+    //COMPLETE
     @IBAction func deleteStudentPressed(_ sender: Any) {
         
         //TODO implement
@@ -437,19 +460,48 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                         case .success (let convertedDoc):
                                             if var week = convertedDoc{
                                                 //Found week to delete from
-                                                
                                                 week.id = document.documentID
-                                                
+                                  
                                                 do {
-                                                    let studentCollection = try db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").document(stu_to_del.doc_id!).delete()
-                                                    {err in
+                                                    let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").getDocuments()
+                                                    { (resultStu, err) in
                                                         
                                                         if let err = err {
                                                             print("Error delete student \(stu_to_del.studentName)")
                                                         }
                                                         else{
-                                                            print("deleted student")
-    
+                                                            
+                                                            for document in resultStu!.documents
+                                                            {
+                                                                let conversionResultStu = Result{ try document.data(as: Student.self)}
+                                                                
+                                                                switch conversionResultStu
+                                                                {
+                                                                case .success(let conversionDoc):
+                                                                    if var student = conversionDoc
+                                                                    {
+                                                                        student.doc_id = document.documentID
+                                                                      
+                                                                        
+                                                                        db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").document(student.doc_id!).delete(){
+                                                                            err in
+                                                                            if let err = err {
+                                                                                print("error deleteing")
+                                                                            }
+                                                                            else{
+                                                                                print("deleted")
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                
+                                                                case .failure(let error):
+                                                                    print("Error getting student: \(error)")
+                                                                }
+                                                            
+                                                            
+                                                            print("deleted student from week \(n)")
+                                                            
+                                                            
                                                         if (self.currentWeek == n){
                                                             
                                                             self.studentsInWeek.remove(at: self.studentsInWeek.firstIndex(where:  {id in id.studentID == textFieldID?.text})!)
@@ -462,25 +514,21 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                                     }
                                                  
                                                 }
-                                                catch let error {
-                                                    print("Error writing student to firestore: \(error)")
-                                                }
                                             }
-                                    
-                                            
-                                        case .failure(let error):
-                                            print("Error getting week: \(error)")
                                     }
-                            
-                                }
+                                    case .failure(let error):
+                                        print("Error getting week: \(error)")
                         
                             }
-                        }
-                    }
+                                }
+                            }
                     
  
-                }))
+                        }
+                    }
                 
+                }))
+                    
                 self.present(delConfirm, animated: true, completion: nil)
             }
             //If doesnt exist
@@ -515,15 +563,25 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    //COMPLETE
     @IBAction func emailReportPressed(_ sender: Any) {
         
-        //TODO GENERATE THE REPORT
-        UIPasteboard.general.string = "TODO AHAHAHHAHAHAHAHAH"
-            
-        print("Clipboard: \(UIPasteboard.general.string)")
+        var string = "Unitname: \(unit!.unitname), Week: \(currentWeek), Grade scheme: \(gradeStyle ?? "none"),\n"
         
+        string = string + "Student Name, Student ID, Grade\n"
+        
+        for student in studentsInWeek{
+            string = string + "\(student.studentName), \(student.studentID), \(student.grade)\n"
+        }
+        
+        UIPasteboard.general.string = string
+            
+        print("Clipboard: \(UIPasteboard.general.string ?? "No information")")
     }
     
+    
+    
+    //COMPLETE
     @IBAction func enteredSearch(_ sender: Any) {
         searchText.text = ""
         oldListStudent.removeAll()
@@ -551,7 +609,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                         {
                             week.id = document.documentID
                             self.WeekObjID = document.documentID
-                            print("WeekID found: \(week.id)")
+                            //print("WeekID found: \(week.id)")
                             
                             let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(self.WeekObjID!).collection("students").getDocuments()
                             { [self] (resultStu, err) in
@@ -571,7 +629,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                             if var student = conversionDoc
                                             {
                                                 student.doc_id = document.documentID
-                                                print("Student found: \(student.studentName)")
+                                                //print("Student found: \(student.studentName)")
                                                 self.oldListStudent.append(student)
                                             }
                                         
@@ -600,8 +658,9 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    //COMPLETE
     @IBAction func searchEntered(_ sender: Any) {
-        print("searchEntered")
+        //print("searchEntered")
         
         if (searchText.text!.isEmpty){
             studentsInWeek.removeAll()
@@ -618,17 +677,19 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     // MARK: - Table view data source
-    
+    //COMPLETE
     func tableView(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
+    //COMPLETE
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return studentsInWeek.count
     }
 
+    //COMPLETE
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "au.edu.utas.ios.StudentCell", for: indexPath)
@@ -646,11 +707,34 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             studentCell.studentGradeField.borderStyle = .none
             studentCell.studentGradeField.isEnabled = false
             
-            var stu_grade: String!
+            var stu_grade = self.gradeStyle
             studentCell.gradeStepper.stepValue = 1;
             
+            if (self.gradeStyle.count >= 4){
+                
+                var strPrefix = String(gradeStyle!.prefix(3)).uppercased()
+                if (strPrefix == "CHK"){
+                    
+                    var strNumb = String(gradeStyle!).suffix(from: String.Index(encodedOffset: 3))//suffix is inclusive starting from 0
+                    print("\(strNumb)")
+                    
+                    var intNumb = Int(strNumb)
+                    
+                    
+                    chk_Gradelist.removeAll()
+                    for i in 0...intNumb!{
+                            chk_Gradelist.append("Check \(i)")
+                    }
+                    
+                    //print("\(strNumb)")
+                    
+                    stu_grade = strPrefix.lowercased()
+                    print("\(stu_grade)")
+                }
+            }
+
             
-            switch (self.gradeStyle){
+            switch (stu_grade){
             
             case "att":
                 
@@ -677,17 +761,17 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 stu_grade = student.grade
                 break
             case "chk":
-                
-                var value: Int!
+//                print("made it to CHK")
+                var value: String!
                 
                 if(student.grade == "UG"){
-                    value = 0
+                    value = "Check 0"
                 }
                 else{
-                    value = Int(student.grade)
+                    value = student.grade
                 }
-                
-                studentCell.gradeStepper.value = Double(value)
+
+                studentCell.gradeStepper.value = 0
                 studentCell.gradeStepper.maximumValue = Double(chk_Gradelist.count - 1)
                 
                 stu_grade = String(value)
@@ -723,7 +807,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             //print("student: \(student.studentName) uhh steppvalue is: \(studentCell.gradeStepper.value) Stepmax \(studentCell.gradeStepper.maximumValue)")
             studentCell.studentGradeField.text = stu_grade
-            if (stu_grade == "0" || stu_grade == "UG" || stu_grade == "Not present"){
+            if (stu_grade == "0" || stu_grade == "UG" || stu_grade == "Not present" || stu_grade == "Check 0"){
                 studentCell.studentGradeField.textColor = .systemRed
             }
                 
@@ -738,6 +822,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
 
+    
+    //COMPLETE
     @IBAction func textChanged(_ sender: UITextField) {
         
         if (gradeStyle == "num"){
@@ -787,7 +873,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             if let cell = self.studentTable.cellForRow(at: indexPath) as? StudentUITableViewCell {
             
-                print("Student name in table: \(cell.studentNameLabel.text) and list name : \(self.studentsInWeek[sender.tag].studentName) with id: \(self.studentsInWeek[sender.tag].doc_id)")
+//                print("Student name in table: \(cell.studentNameLabel.text) and list name : \(self.studentsInWeek[sender.tag].studentName) with id: \(self.studentsInWeek[sender.tag].doc_id)")
                 
                 let db = Firestore.firestore()
                 let studentToUpdate = db.collection("units").document(unit!.id).collection("weeks").document(WeekObjID).collection("students").document(self.studentsInWeek[sender.tag].doc_id!)
@@ -807,6 +893,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    //COMPLETE
     @IBAction func changeSchemeClicked(_ sender: Any) {
         
         
@@ -838,39 +925,62 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             var str = textFieldScheme?.text?.uppercased()
             
-            switch (str){
-            case "HD":
-                print("HD selected")
-                self.gradeStyle = "HD".lowercased()
-            case "A":
-                print("A selected")
-                self.gradeStyle = "A".lowercased()
-            case "NUM":
-                print("NUM selected")
-                self.gradeStyle = "NUM".lowercased()
-            case "CHK":
-                print("CHK selected")
-                self.gradeStyle = "CHK".lowercased()
+            //CHECK CHK
+            if (str!.count >= 4){
                 
-                print("TODO ADD NEXT ALERT FOR AMOUNT OF CHECKPOINTS")
-            case "ATT":
-                print("ATT selected")
-                self.gradeStyle = "ATT".lowercased()
-            default:
-                confirmAlert(title: "Incorrect scheme", message: "Your input, \(str) did not match and schemes")
+                var strPrefix = String(str!.prefix(3))
+                if (strPrefix == "CHK"){
+                    
+                    var strNumb = str!.suffix(from: String.Index(encodedOffset: 3))//suffix is inclusive starting from 0
+                    
+                    var intNumb = Int(strNumb)
+                    
+                    chk_Gradelist.removeAll()
+                    for i in 0...intNumb! + 1{
+                            chk_Gradelist.append("Check \(i)")
+                    }
+                    
+                    print("\(strNumb)")
+                    
+                    str = strPrefix
+                }
             }
             
-            changeMarkSchemeDatabaseCall()
+            var worked = true
+            
+            switch (str){
+            case "HD":
+                //print("HD selected")
+                self.gradeStyle = "HD".lowercased()
+            case "A":
+                //print("A selected")
+                self.gradeStyle = "A".lowercased()
+            case "NUM":
+                //print("NUM selected")
+                self.gradeStyle = "NUM".lowercased()
+            case "CHK":
+                //print("CHK selected")
+                self.gradeStyle = textFieldScheme?.text?.lowercased()
+            case "ATT":
+                //print("ATT selected")
+                self.gradeStyle = "ATT".lowercased()
+            default:
+                self.present(confirmAlert(title: "Incorrect scheme", message: "Your input, \(str ?? "invalid input") did not match and schemes"), animated: true, completion: nil)
+                worked = false
+            
+            }
+            
+            if (worked){
+                changeMarkSchemeDatabaseCall()
+            }
         }))
-        
-        
         
         choiceAlert.addAction(cancelScheme)
         
         self.present(choiceAlert, animated: true, completion: nil)
         
     }
-    
+    //COMPLETE
     @IBAction func gradeChanged(_ sender: UIStepper) {
         //print("Stepper in row: \(sender.tag) value of \(sender.value)")
         
@@ -878,9 +988,32 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if let cell = self.studentTable.cellForRow(at: indexPath) as? StudentUITableViewCell {
             
-            var str: String!
             
-            switch (gradeStyle){
+            //Check if CHK
+            var str = self.gradeStyle
+            var gs = self.gradeStyle
+            
+            if (str!.count >= 4){
+                
+                var strPrefix = String(str!.prefix(3)).uppercased()
+                if (strPrefix == "CHK"){
+                    
+
+                    var strNumb = str!.suffix(from: String.Index(encodedOffset: 3))//suffix is inclusive starting from 0
+                    
+                    var intNumb = Int(strNumb)
+                    
+                    chk_Gradelist.removeAll()
+                    for i in 0...intNumb!{
+                            chk_Gradelist.append("Check \(i)")
+                    }
+                
+                    
+                    str = strPrefix.lowercased()
+                }
+            }
+                   
+            switch (str){
             case "att":
                 str = attendance[Int(sender.value)]
                 break;
@@ -909,7 +1042,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             }
             
-            if ((str == "UG") || (str == "Not present") || str == "0"){
+            if ((str == "UG") || (str == "Not present") || str == "0" || str == "Check 0"){
                 cell.studentGradeField.textColor = .systemRed
             }
             else{
@@ -917,7 +1050,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             
             cell.studentGradeField.text = str
-            self.studentsInWeek[sender.tag].grade = str
+            self.studentsInWeek[sender.tag].grade = str!
             
             //Required to launch event as
             //if text is changed programmatically, it wont activate
