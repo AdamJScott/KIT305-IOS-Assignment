@@ -583,6 +583,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             string = string + "\(student.studentName), \(student.studentID), \(student.grade)\n"
         }
         
+        
+        
         UIPasteboard.general.string = string
             
         print("Clipboard: \(UIPasteboard.general.string ?? "No information")")
@@ -816,8 +818,11 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             //print("student: \(student.studentName) uhh steppvalue is: \(studentCell.gradeStepper.value) Stepmax \(studentCell.gradeStepper.maximumValue)")
             studentCell.studentGradeField.text = stu_grade
-            if (stu_grade == "0" || stu_grade == "UG" || stu_grade == "Not present" || stu_grade == "Check 0"){
+            if (stu_grade == "0" || stu_grade == "UG" || stu_grade == "Not present" || stu_grade == "Check 0" || stu_grade == "F"){
                 studentCell.studentGradeField.textColor = .systemRed
+            }
+            else {
+                studentCell.studentGradeField.textColor = .label
             }
                 
             //Store the indexrow to know who to save
@@ -1084,8 +1089,51 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             //TODO calculations on averages
 //            destination.gradeAveLabel.text = "TODO"
 //            destination.attendedLabel.text = "TODO"
-            destination.gradeAverage = "TODO"
-            destination.attendence = "TODO"
+            
+        
+            var sorted = studentsInWeek.sorted{$0.grade > $1.grade}
+            
+            var gradeHigh: String!
+            var attendCount = 0
+            
+            var nonAttend: String!
+            switch (gradeStyle){
+            case "hd":
+                nonAttend = "UG"
+                break
+            case "a":
+                nonAttend = "F"
+                break
+            case "num":
+                nonAttend = "0.0"
+                break
+            case "att":
+                nonAttend = "Not present"
+                break
+            default:
+                nonAttend = "Check 0"
+                break
+            }
+                
+            var attendence: Float!
+            
+            if (studentsInWeek.count != 0){
+                for i in 0...studentsInWeek.count-1{
+                    if (studentsInWeek[i].grade != nonAttend){
+                        attendCount += 1
+                    }
+                }
+                
+                attendence = (Float(attendCount) / Float(sorted.count)) * 100
+            }
+            else{
+                attendence = 0.0
+            }
+            
+            destination.gradeAverage = "TODO AVERAGE"
+            
+            
+            destination.attendence = "\(String(attendence).prefix(4))%"
             
             //Create the report array
             var strRep = [String]()
@@ -1099,6 +1147,10 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             
             destination.studentReport = strRep
+        }
+  
+        if (segue.identifier == "toStudentView"){
+            //TODO
         }
     }
     
