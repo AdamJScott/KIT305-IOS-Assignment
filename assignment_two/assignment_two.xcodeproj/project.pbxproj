@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8609F97A2653508A00A104A6 /* ReportWeekViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609F9792653508A00A104A6 /* ReportWeekViewController.swift */; };
+		8609F97C2653529800A104A6 /* ReportUITableCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8609F97B2653529800A104A6 /* ReportUITableCellTableViewCell.swift */; };
 		860F25172648F4E400A15FBD /* UnitUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F25162648F4E400A15FBD /* UnitUITableViewCell.swift */; };
 		860F25192648F5D500A15FBD /* UnitUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F25182648F5D500A15FBD /* UnitUITableViewController.swift */; };
 		860F251B2648F6A800A15FBD /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F251A2648F6A800A15FBD /* Unit.swift */; };
@@ -28,6 +30,8 @@
 		11F1AF3AB17AC1828B8FE1E5 /* Pods-assignment_two.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-assignment_two.debug.xcconfig"; path = "Target Support Files/Pods-assignment_two/Pods-assignment_two.debug.xcconfig"; sourceTree = "<group>"; };
 		2137E84D5C352DC64A059868 /* Pods_assignment_two.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_assignment_two.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3060C8CF7D2B904758381345 /* Pods-assignment_two.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-assignment_two.release.xcconfig"; path = "Target Support Files/Pods-assignment_two/Pods-assignment_two.release.xcconfig"; sourceTree = "<group>"; };
+		8609F9792653508A00A104A6 /* ReportWeekViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportWeekViewController.swift; sourceTree = "<group>"; };
+		8609F97B2653529800A104A6 /* ReportUITableCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportUITableCellTableViewCell.swift; sourceTree = "<group>"; };
 		860F25162648F4E400A15FBD /* UnitUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitUITableViewCell.swift; sourceTree = "<group>"; };
 		860F25182648F5D500A15FBD /* UnitUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitUITableViewController.swift; sourceTree = "<group>"; };
 		860F251A2648F6A800A15FBD /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
@@ -87,10 +91,12 @@
 		86B595F3263A2E7F00E9EA60 /* assignment_two */ = {
 			isa = PBXGroup;
 			children = (
+				8609F97B2653529800A104A6 /* ReportUITableCellTableViewCell.swift */,
 				86B595F4263A2E7F00E9EA60 /* AppDelegate.swift */,
 				86B595F6263A2E7F00E9EA60 /* SceneDelegate.swift */,
 				86B595F8263A2E7F00E9EA60 /* ViewController.swift */,
 				86B595FA263A2E7F00E9EA60 /* Main.storyboard */,
+				8609F9792653508A00A104A6 /* ReportWeekViewController.swift */,
 				86537DFF264A029100CD5129 /* StudentUITableViewCell.swift */,
 				86537DF92649F8F500CD5129 /* WeeksViewController.swift */,
 				86537DFB264A00C300CD5129 /* Week.swift */,
@@ -232,7 +238,9 @@
 			files = (
 				86B595F9263A2E7F00E9EA60 /* ViewController.swift in Sources */,
 				86537DFC264A00C300CD5129 /* Week.swift in Sources */,
+				8609F97A2653508A00A104A6 /* ReportWeekViewController.swift in Sources */,
 				860F251B2648F6A800A15FBD /* Unit.swift in Sources */,
+				8609F97C2653529800A104A6 /* ReportUITableCellTableViewCell.swift in Sources */,
 				86537DFA2649F8F500CD5129 /* WeeksViewController.swift in Sources */,
 				86537DFE264A010C00CD5129 /* Student.swift in Sources */,
 				860F25172648F4E400A15FBD /* UnitUITableViewCell.swift in Sources */,

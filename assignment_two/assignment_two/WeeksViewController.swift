@@ -563,6 +563,15 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    
+    @IBAction func moveToWeekDetail(_ sender: Any) {
+        
+        
+        
+    }
+    
+    
+    
     //COMPLETE
     @IBAction func emailReportPressed(_ sender: Any) {
         
@@ -1057,7 +1066,45 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             cell.studentGradeField.sendActions(for: .editingChanged)
         }
     }
+
+
+    // MARK: - NAVIGATION
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "toWeekReport"){
+            
+            guard let destination = segue.destination as? ReportWeekViewController else
+            {
+                fatalError("Incorrect destination \(segue.destination)")
+            }
+            
+//            destination.weekTitle.text = String(self.currentWeek)
+            destination.title = "Report week: \(String(self.currentWeek))"
+            destination.weekNum = self.currentWeek
+            
+            //TODO calculations on averages
+//            destination.gradeAveLabel.text = "TODO"
+//            destination.attendedLabel.text = "TODO"
+            destination.gradeAverage = "TODO"
+            destination.attendence = "TODO"
+            
+            //Create the report array
+            var strRep = [String]()
+            strRep.append("Unitname: \(unit!.unitname), Week: \(currentWeek), Grade scheme: \(gradeStyle ?? "none")")
+            
+            strRep.append("Student Name, Student ID, Grade")
+           
+            for student in studentsInWeek{
+                strRep.append("\(student.studentName), \(student.studentID), \(student.grade)")
+            }
+            
+            
+            destination.studentReport = strRep
+        }
+    }
+    
 }
+
+
 
 
 

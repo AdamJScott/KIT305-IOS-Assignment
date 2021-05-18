@@ -157,7 +157,7 @@
                                     <action selector="deleteStudentPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vfO-SL-GsR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0j-BD-1kr">
+                            <button opaque="NO" tag="-7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0j-BD-1kr">
                                 <rect key="frame" x="239" y="727" width="159" height="46"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
@@ -165,6 +165,7 @@
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
                                 <connections>
+                                    <action selector="moveToWeekDetail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JLs-FD-IcS"/>
                                     <segue destination="jYd-dK-VXZ" kind="show" identifier="toWeekReport" id="AXL-Sn-3di"/>
                                 </connections>
                             </button>
@@ -248,7 +249,7 @@
         <!--WeekReportView-->
         <scene sceneID="shk-A5-IMI">
             <objects>
-                <viewController title="WeekReportView" id="jYd-dK-VXZ" sceneMemberID="viewController">
+                <viewController title="WeekReportView" id="jYd-dK-VXZ" customClass="ReportWeekViewController" customModule="assignment_two" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XUc-mu-c8Q">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,29 +285,47 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfb-XX-aeQ">
-                                <rect key="frame" x="242" y="820" width="140" height="42"/>
+                                <rect key="frame" x="242" y="796" width="140" height="42"/>
                                 <color key="backgroundColor" name="AccentColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <state key="normal" title=" Email report ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="sendEmail:" destination="jYd-dK-VXZ" eventType="touchUpInside" id="esG-DI-p1C"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRf-7b-S85">
-                                <rect key="frame" x="32" y="820" width="101" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title=" Go back "/>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vro-9G-mL9">
-                                <rect key="frame" x="16" y="264" width="382" height="524"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vro-9G-mL9">
+                                <rect key="frame" x="16" y="264" width="382" height="500"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="500" id="kIQ-oO-FUm"/>
+                                </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="lpg-Ig-Krw">
-                                        <rect key="frame" x="0.0" y="24.5" width="382" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="au.edu.utas.ios.reportCell" id="lpg-Ig-Krw" customClass="ReportUITableCellTableViewCell" customModule="assignment_two" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24.5" width="382" height="54.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lpg-Ig-Krw" id="eKd-sj-fad">
-                                            <rect key="frame" x="0.0" y="0.0" width="382" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="382" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewL-zK-274">
+                                                    <rect key="frame" x="28" y="19" width="326" height="16.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ewL-zK-274" secondAttribute="trailing" constant="8" id="M7k-O3-EGS"/>
+                                                <constraint firstItem="ewL-zK-274" firstAttribute="top" secondItem="eKd-sj-fad" secondAttribute="topMargin" constant="8" id="dRD-hX-k8w"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="ewL-zK-274" secondAttribute="bottom" constant="8" id="jSA-tl-owu"/>
+                                                <constraint firstItem="ewL-zK-274" firstAttribute="leading" secondItem="eKd-sj-fad" secondAttribute="leadingMargin" constant="8" id="rTV-ih-Uqj"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellText" destination="ewL-zK-274" id="Ch1-cM-gPR"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -318,17 +337,14 @@
                             <constraint firstItem="gfb-XX-aeQ" firstAttribute="top" secondItem="vro-9G-mL9" secondAttribute="bottom" constant="32" id="1vY-c5-R0J"/>
                             <constraint firstItem="ec0-qX-CUY" firstAttribute="trailing" secondItem="Vx1-qs-u9f" secondAttribute="trailing" constant="16" id="4GS-rV-T2i"/>
                             <constraint firstItem="xCV-j8-HCM" firstAttribute="top" secondItem="24w-fO-zWm" secondAttribute="bottom" constant="16" id="74y-cx-zwB"/>
-                            <constraint firstItem="NRf-7b-S85" firstAttribute="leading" secondItem="ec0-qX-CUY" secondAttribute="leading" constant="32" id="7FK-pq-Wk9"/>
                             <constraint firstItem="Vx1-qs-u9f" firstAttribute="top" secondItem="SQ6-OO-zrx" secondAttribute="bottom" constant="16" id="AWY-fR-UTC"/>
                             <constraint firstItem="ec0-qX-CUY" firstAttribute="trailing" secondItem="SQ6-OO-zrx" secondAttribute="trailing" constant="16" id="CVf-D1-PSD"/>
                             <constraint firstItem="ec0-qX-CUY" firstAttribute="trailing" secondItem="kXq-ng-Iuv" secondAttribute="trailing" constant="16" id="F1F-Su-sKw"/>
                             <constraint firstItem="SQ6-OO-zrx" firstAttribute="top" secondItem="kXq-ng-Iuv" secondAttribute="bottom" constant="16" id="FFV-PO-9WU"/>
                             <constraint firstItem="vro-9G-mL9" firstAttribute="top" secondItem="xCV-j8-HCM" secondAttribute="bottom" constant="32" id="FGi-eK-6i5"/>
                             <constraint firstItem="ec0-qX-CUY" firstAttribute="trailing" secondItem="gfb-XX-aeQ" secondAttribute="trailing" constant="32" id="Shc-ab-MZ0"/>
-                            <constraint firstItem="NRf-7b-S85" firstAttribute="top" secondItem="vro-9G-mL9" secondAttribute="bottom" constant="32" id="eGN-FO-46n"/>
                             <constraint firstItem="vro-9G-mL9" firstAttribute="leading" secondItem="ec0-qX-CUY" secondAttribute="leading" constant="16" id="gQI-l7-gNy"/>
                             <constraint firstItem="xCV-j8-HCM" firstAttribute="leading" secondItem="ec0-qX-CUY" secondAttribute="leading" constant="16" id="i6k-pK-KVe"/>
-                            <constraint firstItem="NRf-7b-S85" firstAttribute="bottom" secondItem="ec0-qX-CUY" secondAttribute="bottom" id="jyf-FP-sZj"/>
                             <constraint firstItem="24w-fO-zWm" firstAttribute="leading" secondItem="ec0-qX-CUY" secondAttribute="leading" constant="16" id="pW7-Rt-RPJ"/>
                             <constraint firstItem="ec0-qX-CUY" firstAttribute="trailing" secondItem="vro-9G-mL9" secondAttribute="trailing" constant="16" id="vfB-G0-kAl"/>
                             <constraint firstItem="24w-fO-zWm" firstAttribute="top" secondItem="kXq-ng-Iuv" secondAttribute="bottom" constant="16" id="wyx-8h-kMG"/>
@@ -338,6 +354,12 @@
                     <navigationItem key="navigationItem" title="Week Report" id="NwJ-JV-gyw">
                         <barButtonItem key="backBarButtonItem" title="Weeks" id="Ejy-uZ-kDi"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="attendedLabel" destination="Vx1-qs-u9f" id="Wcf-Xa-lbf"/>
+                        <outlet property="gradeAveLabel" destination="SQ6-OO-zrx" id="cZe-Xc-zbX"/>
+                        <outlet property="reportTable" destination="vro-9G-mL9" id="SHY-h0-YEd"/>
+                        <outlet property="weekTitle" destination="kXq-ng-Iuv" id="Bfa-Ic-ONm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEc-U8-SGJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -621,6 +643,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
