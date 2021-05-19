@@ -6,10 +6,6 @@
 //
 
 
-//TODO CHANGE GRADE SCHEMES THAT RESET GRADES - NEED TO IMPLEMENT CHECKPOINTS
-//TODO GENERATE WEEK REPORT FUNCTION
-//TODO ADD WEEK REPORT FUNCTION TO EMAIL REPORT
-//TODO MOVEMENT TO WEEK REPORT, WITH WEEK REPORT FUNCTION AND ALL CALCULATIONS
 //TODO MOVEMENT TO STUDENT DETAILS, WITH STUDENT INFORMATION FROM ALL WEEKS(?)
 //TODO IN STUDENT DETAILS: PHOTO CAMERA STUFF, ADD, CHANGE, DELETE
 
@@ -565,12 +561,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBAction func moveToWeekDetail(_ sender: Any) {
-        
-        
-        
+        //SEGUE gets activated without this, used for debug purposes
     }
-    
-    
     
     //COMPLETE
     @IBAction func emailReportPressed(_ sender: Any) {
@@ -589,8 +581,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
         print("Clipboard: \(UIPasteboard.general.string ?? "No information")")
     }
-    
-    
+
     
     //COMPLETE
     @IBAction func enteredSearch(_ sender: Any) {
@@ -835,7 +826,6 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
         
     }
-
     
     //COMPLETE
     @IBAction func textChanged(_ sender: UITextField) {
@@ -1094,6 +1084,30 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             var sorted = studentsInWeek.sorted{$0.grade > $1.grade}
             
             var gradeHigh: String!
+            var gradeHighCount = 0
+            
+            
+// www.stackoverflow.com/questions/30545518/how-to-count-occurances-of-an-element-in-a-swift-array
+            var counts: [String: Int] = [:]
+            
+            //Get the counts
+            for item in studentsInWeek{
+                counts[item.grade] = (counts[item.grade] ?? 0) + 1
+            }
+            
+            //Find the highest, mode (not mean, could still be mean?)
+            for (key, value) in counts {
+                if (gradeHighCount == 0){
+                    gradeHigh = key
+                    gradeHighCount = value
+                }
+                
+                else if (value > gradeHighCount){
+                    gradeHigh = key
+                    gradeHighCount = value
+                }
+            }
+            
             var attendCount = 0
             
             var nonAttend: String!
@@ -1130,7 +1144,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 attendence = 0.0
             }
             
-            destination.gradeAverage = "TODO AVERAGE"
+            destination.gradeAverage = gradeHigh
             
             
             destination.attendence = "\(String(attendence).prefix(4))%"
@@ -1151,6 +1165,51 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
   
         if (segue.identifier == "toStudentView"){
             //TODO
+            
+            
+            //We have the destination
+            guard let destination = segue.destination as? StudentDetailViewController else
+            {
+                fatalError("Incorrect destination \(segue.destination)")
+            }
+            
+            //Get the student
+            
+            guard let selectedStudentCell = sender as? StudentUITableViewCell else
+            {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            let indexPath = selectedStudentCell.studentGradeField.tag
+            
+            let selectedStudent = studentsInWeek[indexPath]
+            
+            destination.title = selectedStudent.studentName
+            
+            destination.studentName = selectedStudent.studentName
+            destination.studentID = selectedStudent.studentID
+            
+            
+            //Grade average
+
+            
+            destination.gradeAverage = "TODO"
+            
+            
+            //Attendence percent
+            
+            
+            destination.attendance = "TODO"
+            
+            
+            
+            //Last grade (latest week that isn't a UG / 0 / etc)
+            
+            
+            
+            destination.lastGrade = "TODO"
+            
+            
         }
     }
     

@@ -75,6 +75,7 @@
                                             <outlet property="studentGradeField" destination="hTe-0g-veq" id="m3e-Pq-pjX"/>
                                             <outlet property="studentIDLabel" destination="aC0-Hr-zo6" id="8C4-x7-OcN"/>
                                             <outlet property="studentNameLabel" destination="XB5-cv-1oc" id="Wea-zS-4b6"/>
+                                            <segue destination="RSA-jh-cce" kind="show" identifier="toStudentView" id="beV-Nc-Bo8"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -368,7 +369,7 @@
         <!--StudentView-->
         <scene sceneID="l5E-oi-TWG">
             <objects>
-                <viewController title="StudentView" id="RSA-jh-cce" sceneMemberID="viewController">
+                <viewController title="StudentView" id="RSA-jh-cce" customClass="StudentDetailViewController" customModule="assignment_two" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="avP-T3-4wF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -388,6 +389,9 @@
                                 <state key="normal" title=" Take photo ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="RSA-jh-cce" eventType="touchUpInside" id="Tsy-iR-y50"/>
+                                </connections>
                             </button>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HLX-k3-gi8">
                                 <rect key="frame" x="157" y="162" width="241" height="42"/>
@@ -397,6 +401,9 @@
                                 <state key="normal" title=" Choose photo ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="choosePhoto:" destination="RSA-jh-cce" eventType="touchUpInside" id="qFj-nu-SW4"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T9Z-kD-Dzr">
                                 <rect key="frame" x="157" y="220" width="241" height="42"/>
@@ -406,11 +413,17 @@
                                 <state key="normal" title=" Remove photo ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="removePhoto:" destination="RSA-jh-cce" eventType="touchUpInside" id="9Xb-M7-cHB"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Student Name" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Yu-SY-Ean">
                                 <rect key="frame" x="16" y="294" width="382" height="52"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" textContentType="name"/>
+                                <connections>
+                                    <action selector="saveChangedName:" destination="RSA-jh-cce" eventType="primaryActionTriggered" id="4zK-Gm-afM"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsm-48-EDq">
                                 <rect key="frame" x="32" y="362" width="120" height="30"/>
@@ -461,6 +474,9 @@
                                 <state key="normal" title=" Email Student Summary ">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="emailSummary:" destination="RSA-jh-cce" eventType="touchUpInside" id="qfe-E1-dPy"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-hY-y0M">
                                 <rect key="frame" x="128" y="706" width="158" height="48"/>
@@ -522,6 +538,14 @@
                     <navigationItem key="navigationItem" title="Student Details" id="jJm-Kx-uLk">
                         <barButtonItem key="backBarButtonItem" title="Weeks" id="nN9-wG-eba"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="attendanceLabel" destination="unY-Eg-gEG" id="sIM-iK-gsW"/>
+                        <outlet property="gradeAverageLabel" destination="5hl-mn-wwb" id="fo5-KU-e2A"/>
+                        <outlet property="lastGradeLabel" destination="BV3-oD-O8V" id="abe-cN-bU4"/>
+                        <outlet property="studentIDlabel" destination="69Q-xd-4e1" id="h3O-G1-g8a"/>
+                        <outlet property="studentNameField" destination="7Yu-SY-Ean" id="bbj-Rs-Pq2"/>
+                        <outlet property="studentPhoto" destination="yNB-f0-WaX" id="CER-Of-hgD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4nJ-Ub-D4r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -613,24 +637,6 @@
                 </button>
             </objects>
             <point key="canvasLocation" x="221.73913043478262" y="16.741071428571427"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Py0-6d-DqT">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LVk-zO-bnT" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Do7-1T-rb9">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="RSA-jh-cce" kind="relationship" relationship="rootViewController" id="H6q-bl-UHp"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ett-4e-xQz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3117" y="-684"/>
         </scene>
     </scenes>
     <resources>

@@ -16,6 +16,7 @@
 		86537DFC264A00C300CD5129 /* Week.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86537DFB264A00C300CD5129 /* Week.swift */; };
 		86537DFE264A010C00CD5129 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86537DFD264A010C00CD5129 /* Student.swift */; };
 		86537E00264A029100CD5129 /* StudentUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86537DFF264A029100CD5129 /* StudentUITableViewCell.swift */; };
+		868634DA26547A460065B3A2 /* StudentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868634D926547A460065B3A2 /* StudentDetailViewController.swift */; };
 		86B595F5263A2E7F00E9EA60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B595F4263A2E7F00E9EA60 /* AppDelegate.swift */; };
 		86B595F7263A2E7F00E9EA60 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B595F6263A2E7F00E9EA60 /* SceneDelegate.swift */; };
 		86B595F9263A2E7F00E9EA60 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B595F8263A2E7F00E9EA60 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 		86537DFB264A00C300CD5129 /* Week.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week.swift; sourceTree = "<group>"; };
 		86537DFD264A010C00CD5129 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		86537DFF264A029100CD5129 /* StudentUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentUITableViewCell.swift; sourceTree = "<group>"; };
+		868634D926547A460065B3A2 /* StudentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentDetailViewController.swift; sourceTree = "<group>"; };
 		86B595F1263A2E7F00E9EA60 /* assignment_two.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment_two.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86B595F4263A2E7F00E9EA60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86B595F6263A2E7F00E9EA60 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				86B595F6263A2E7F00E9EA60 /* SceneDelegate.swift */,
 				86B595F8263A2E7F00E9EA60 /* ViewController.swift */,
 				86B595FA263A2E7F00E9EA60 /* Main.storyboard */,
+				868634D926547A460065B3A2 /* StudentDetailViewController.swift */,
 				8609F9792653508A00A104A6 /* ReportWeekViewController.swift */,
 				86537DFF264A029100CD5129 /* StudentUITableViewCell.swift */,
 				86537DF92649F8F500CD5129 /* WeeksViewController.swift */,
@@ -238,6 +241,7 @@
 			files = (
 				86B595F9263A2E7F00E9EA60 /* ViewController.swift in Sources */,
 				86537DFC264A00C300CD5129 /* Week.swift in Sources */,
+				868634DA26547A460065B3A2 /* StudentDetailViewController.swift in Sources */,
 				8609F97A2653508A00A104A6 /* ReportWeekViewController.swift in Sources */,
 				860F251B2648F6A800A15FBD /* Unit.swift in Sources */,
 				8609F97C2653529800A104A6 /* ReportUITableCellTableViewCell.swift in Sources */,
