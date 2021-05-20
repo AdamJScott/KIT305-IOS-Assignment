@@ -718,7 +718,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 if (strPrefix == "CHK"){
                     
                     var strNumb = String(gradeStyle!).suffix(from: String.Index(encodedOffset: 3))//suffix is inclusive starting from 0
-                    print("\(strNumb)")
+                    //print("\(strNumb)")
                     
                     var intNumb = Int(strNumb)
                     
@@ -731,7 +731,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     //print("\(strNumb)")
                     
                     stu_grade = strPrefix.lowercased()
-                    print("\(stu_grade)")
+                    //print("\(stu_grade)")
                 }
             }
 
@@ -1188,6 +1188,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             destination.studentName = selectedStudent.studentName
             destination.studentID = selectedStudent.studentID
+            destination.unit = self.unit
             
             
             //Grade average
@@ -1212,6 +1213,13 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
         }
     }
+    
+    
+    @IBAction func unwindToWeekList(sender: UIStoryboardSegue){
+        print("Unwinded")
+        fetchDatabaseCall()
+    }
+    
     
 }
 
