@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  assignment_two
 //
-//  Created by Swift Labourer on 29/4/21.
+//  Created by Adam Scott on 29/4/21.
 //
 
 import UIKit

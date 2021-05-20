@@ -2,7 +2,7 @@
 //  StudentDetailViewController.swift
 //  assignment_two
 //
-//  Created by Swift Labourer on 19/5/21.
+//  Created by Adam Scott on 19/5/21.
 //
 
 import UIKit

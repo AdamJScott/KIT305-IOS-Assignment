@@ -2,12 +2,12 @@
 //  WeeksViewController.swift
 //  assignment_two
 //
-//  Created by Swift Labourer on 11/5/21.
+//  Created by Adam Scott on 11/5/21.
 //
 
 
-//TODO MOVEMENT TO STUDENT DETAILS, WITH STUDENT INFORMATION FROM ALL WEEKS(?)
-//TODO IN STUDENT DETAILS: PHOTO CAMERA STUFF, ADD, CHANGE, DELETE
+//TODO MOVEMENT TO STUDENT DETAILS, Need to get student information then completed
+
 
 
 import UIKit
