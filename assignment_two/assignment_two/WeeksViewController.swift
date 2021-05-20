@@ -360,8 +360,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                                                     }
                                                     else{
                                                         //print("Added student")
-                                            
-                                                        self.present(confirmAlert(title: "Added", message: "Confirmed addition"), animated: true, completion: nil)
+                                                        
                                                     }
                                                 
                                                 })
@@ -908,12 +907,12 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let options = """
             Note: \n
-            Choosing the current scheme will reset all grades\n\n
+            Changing schemes will reset all grades (including picking the current scheme)\n\n
             Options list:\n
             HD for HD DN CR PP NN\n
             A for A B C D E\n
             NUM for 0 to 100\n
-            CHK for checkpoints\n
+            CHK[num] for checkpoints e.g. CHK4\n
             ATT for attendance
             """
         
@@ -939,6 +938,25 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     
                     var intNumb = Int(strNumb)
                     
+                    if (intNumb == nil){
+                        self.present(confirmAlert(title: "Error", message: "Please enter in the number of checkpoints you wish to add in the form CHK[n] where [n] is a real number"),animated: true, completion: nil)
+                        
+                        str = ""
+                    }
+                    
+                    else if (intNumb! > 1000){
+                        self.present(confirmAlert(title: "Error too many checkpoints", message: "\(intNumb!) checkpoints is too much for one class, please doube check your teaching method"),animated: true, completion: nil)
+                        
+                        str = ""
+                    }
+                    
+                    else if (intNumb! < 0){
+                        self.present(confirmAlert(title: "Error too many checkpoints", message: "You can't have \(intNumb!) checkpoints"),animated: true, completion: nil)
+                        
+                        str = ""
+                    }
+                    
+                    else {
                     chk_Gradelist.removeAll()
                     for i in 0...intNumb! + 1{
                             chk_Gradelist.append("Check \(i)")
@@ -947,7 +965,9 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     print("\(strNumb)")
                     
                     str = strPrefix
+                    }
                 }
+                
             }
             
             var worked = true
@@ -1190,6 +1210,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             destination.studentID = selectedStudent.studentID
             destination.unit = self.unit
             
+            
+            var studentInformation [String]()
             
             //Grade average
 

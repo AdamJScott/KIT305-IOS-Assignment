@@ -130,7 +130,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search for a student" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="raa-Dj-dTo">
                                 <rect key="frame" x="16" y="168" width="382" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="search"/>
                                 <connections>
                                     <action selector="enteredSearch:" destination="BYZ-38-t0r" eventType="touchDown" id="npf-BM-CbP"/>
                                     <action selector="searchEntered:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="Avv-1t-pdg"/>
