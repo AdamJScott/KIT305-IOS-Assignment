@@ -34,7 +34,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     var attendance = ["Present", "Not present"]
     var chk_Gradelist = [String]()
     
-
+    var unitSummary = [String]()
+    
     var unit: Unit?
     var unitIndex: Int?
     
@@ -45,6 +46,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     var currentWeek = 1
     var WeekObjID: String!
     var gradeStyle: String!
+    var firstCall = false
     
     
     
@@ -198,6 +200,95 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 }
             }
             
+        }
+        
+        if (firstCall == false){
+        firstCall = true
+        self.unitSummary.removeAll()
+        
+        //unitSummary.append("Unit summary all weeks for: \(unit!.unitname ?? "")")
+        //unitSummary.append("Week, Grade Average Week, Grade Average Numeric, Attendence Rate")
+            
+        
+       
+            db.collection("units").document(unit!.id).collection("weeks").getDocuments(){ (result, err) in
+                
+                if let err = err
+                {
+                    print("error getting week: \(err)")
+                }
+                else
+                {
+                    for document in result!.documents
+                    {
+                        let conversionResult = Result{
+                            try document.data(as: Week.self)
+                        }
+                        
+                        switch conversionResult
+                        {
+                        case .success (let convertedDoc):
+                            if var week = convertedDoc
+                            {
+                                week.id = document.documentID
+                                var studentInner = [Student]()
+                               
+                                
+                                let studentCollection = db.collection("units").document(self.unit!.id).collection("weeks").document(week.id).collection("students").getDocuments()
+                                { (resultStu, err) in
+                                    if let err = err{
+                                        print("Error getting student \(err)")
+                                    }
+                                    
+                                    else
+                                    {
+                                        for document in resultStu!.documents
+                                        {
+                                            let conversionResultStu = Result{ try document.data(as: Student.self)}
+                                            
+                                            switch conversionResultStu
+                                            {
+                                            case .success(let conversionDoc):
+                                                if var student = conversionDoc
+                                                {
+                                                    student.doc_id = document.documentID
+                                                    //print("Student found: \(student.studentName)")
+                                                    studentInner.append(student)
+                                                    
+                                                    
+                                                }
+                                                
+                                            
+                                            case .failure(let error):
+                                                print("Error getting student: \(error)")
+                                            }
+                                        }
+                                        //print("Getting info")
+                                        //get information and append to the string array
+                                        
+                                        self.unitSummary.append("\(week.weekNumber), \(self.averageWeek(students: studentInner)), \(self.gradeToNumeric(grade: self.averageWeek(students: studentInner), gradeStyle: week.gradeScheme))/100, \(self.attendenceWeek(students: studentInner, gradeStyle: week.gradeScheme))% ")
+                                        
+                                       // print("\(week.weekNumber), \(self.averageWeek(students: studentInner)), \(self.attendenceWeek(students: studentInner, gradeStyle: week.gradeScheme)) ")
+                                        
+                                    }
+                                    
+                                }
+                                
+                                            
+                            }
+                            
+                            
+                            
+                        case .failure(let error):
+                            print("error decoding the week: \(error)")
+                        
+                        }
+                    }
+                    
+                    
+                    
+                }
+            }
         }
     }
     
@@ -398,7 +489,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     //COMPLETE
     @IBAction func deleteStudentPressed(_ sender: Any) {
         
-        //TODO implement
+     
         //As the student object knows it's own documentID, a call can be removed
         let delAlert = UIAlertController(title: "Delete student", message: "Enter student ID", preferredStyle: .alert)
         
@@ -580,7 +671,182 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
         print("Clipboard: \(UIPasteboard.general.string ?? "No information")")
     }
+    
+    
+    func hdToNumeric(grade: String) -> Int{
+        switch (grade){
+        case "HD":
+            return 100
+        case "DN":
+            return 80
+        case "CR":
+            return 60
+        case "PP":
+            return 50
+        case "NN":
+            return 25
+        default:
+            return 0
+        }
+    }
+    
+    func aToNumeric(grade:String) -> Int{
+        switch (grade){
+        case "A":
+            return 100
+        case "B":
+            return 80
+        case "C":
+            return 60
+        case "D":
+            return 50
+        case "F":
+            return 25
+        default:
+            return 0
+        }
+    }
+    
+    func numToNumeric(grade:String) -> Int{
+        return Int(Float(grade) ?? 0)
+    }
+    
+    func attToNumeric(grade:String) -> Int{
+        if (grade == "Present"){
+            return 100
+        }
+        else{
+            return 0
+        }
+    }
+    
+    func chkToNumeric(grade: String, gradeStyle: String) -> String{
+        //calculate percentage mark from gradeChose from GradeList
+            
+        if (grade.count > 5){
+        //get the int number in grade scheme
+        var amountOfPoints = Float(gradeStyle.suffix(from: String.Index(encodedOffset: 3)))
+        
+        //get the int number in grade
+            var gradeFound = grade.components(separatedBy: "Check ")
+            //print("Grade found: \(gradeFound[1])")
+            
+            var percentage = Float(gradeFound[1])! / amountOfPoints! * 100
+            
+        var strPer = percentage
+        //var strPer = "2"
+            
+        return String(strPer)
+        }
+        
+        return "0"
+    }
+    
+    func attendenceWeek(students: [Student], gradeStyle: String) -> String{
+        
+        var sorted = students.sorted{$0.grade > $1.grade}
+        var attendCount = 0
+        
+        var nonAttend: String!
+        switch (gradeStyle){
+        case "hd":
+            nonAttend = "UG"
+            break
+        case "a":
+            nonAttend = "F"
+            break
+        case "num":
+            nonAttend = "0.0"
+            break
+        case "att":
+            nonAttend = "Not present"
+            break
+        default:
+            nonAttend = "Check 0"
+            break
+        }
+            
+        var attendence: Float!
+        
+        if (students.count != 0){
+            for i in 0...students.count-1{
+                if (students[i].grade != nonAttend){
+                    attendCount += 1
+                }
+            }
+            
+            attendence = (Float(attendCount) / Float(sorted.count)) * 100
+        }
+        else{
+            attendence = 0.0
+        }
+        
+        return String(attendence)
+        
+    }
+    
+    func averageWeek(students: [Student]) -> String {
+        
+        var gradeHigh: String!
+        var gradeHighCount = 0
+        
+        
+// www.stackoverflow.com/questions/30545518/how-to-count-occurances-of-an-element-in-a-swift-array
+        var counts: [String: Int] = [:]
+        
+        //Get the counts
+        for item in students{
+            counts[item.grade] = (counts[item.grade] ?? 0) + 1
+        }
+        
+        //Find the highest, mode (not mean, could still be mean?)
+        for (key, value) in counts {
+            if (gradeHighCount == 0){
+                gradeHigh = key
+                gradeHighCount = value
+            }
+            
+            else if (value > gradeHighCount){
+                gradeHigh = key
+                gradeHighCount = value
+            }
+        }
+        
+        var gradeAverage = gradeHigh
+        return gradeAverage!
+    }
+    
+    func gradeToNumeric(grade: String, gradeStyle: String) -> String{
+        
+        switch (gradeStyle){
+        case "hd":
+            return String(hdToNumeric(grade: grade))
+        case "a":
+            return String(aToNumeric(grade: grade))
+        case "num":
+            return String(numToNumeric(grade: grade))
+        case "att":
+            return String(attToNumeric(grade: grade))
+        default:
+            //Chk point
+            return String(chkToNumeric(grade: grade, gradeStyle: gradeStyle))
+        }
+        return String("")
+    }
 
+    @IBAction func unitSummaryEmail(_ sender: Any) {
+        
+        print("Pressed unit email")
+        
+        unitSummary = unitSummary.sorted{$0 < $1}
+        
+        UIPasteboard.general.string = self.unitSummary.joined(separator: "\n")
+        
+        self.present(confirmAlert(title: "The following has been added to your clipboard", message: "Unit summary all weeks for: \(unit!.unitname ?? "")\nWeek, Grade Average, GA Numeric, Attendence %\n\(UIPasteboard.general.string ?? "No information")"), animated: true, completion: nil)
+            
+        print("Clipboard: \(UIPasteboard.general.string ?? "No information")")
+        
+    }
     
     //COMPLETE
     @IBAction func enteredSearch(_ sender: Any) {
@@ -707,6 +973,8 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             studentCell.studentGradeField.borderStyle = .none
             studentCell.studentGradeField.isEnabled = false
+            studentCell.studentGradeField.keyboardType = .asciiCapable
+            
             
             var stu_grade = self.gradeStyle
             studentCell.gradeStepper.stepValue = 1;
@@ -779,23 +1047,32 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 break
             case "num":
                 var value: Int!
+                studentCell.studentGradeField.isEnabled = true
+                studentCell.studentGradeField.returnKeyType = .done
+                studentCell.studentGradeField.borderStyle = .bezel
+                studentCell.studentGradeField.keyboardType = .asciiCapableNumberPad
                 
                 if(student.grade == "UG"){
                     value = 0
                 }
                 else{
-                    value = (student.grade as NSString).integerValue
+                    value = Int(Float(student.grade) ?? 0)
+                    
                 }
-                
-                studentCell.gradeStepper.value = Double(value)
+                //print("Value CHOSEN CHOSEN CHOSEN is: \(Double(value ?? 0))")
+                studentCell.gradeStepper.value = Double(value ?? 0)
                 studentCell.gradeStepper.maximumValue = 100
-                if (value < 70){
+                
+                
+                if (value < 50){
+                    studentCell.gradeStepper.stepValue = 10
+                }
+                else if (value < 80 && value > 50){
                     studentCell.gradeStepper.stepValue = 5
                 }
                 else{
                     studentCell.gradeStepper.stepValue = 1
                 }
-                
     
                 stu_grade = String(value)
                 
@@ -843,7 +1120,13 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 }
                 else
                 {
-                    var grade_todouble_thenFinallyString = String(Double(studentsInWeek[sender.tag].grade)!)
+                    
+                    var grade_todouble_thenFinallyString = String(Double(sender.text!)!)
+                    
+                    if (Double(sender.text!)! > 100){
+                        grade_todouble_thenFinallyString = "100.0"
+                        sender.text = "100.0"
+                    }
                     
                     print("Changed :\(sender.text) with id of \(sender.tag)")
                 
@@ -894,11 +1177,11 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
         }
         
+        firstCall = false //It's been updated
     }
     
     //COMPLETE
     @IBAction func changeSchemeClicked(_ sender: Any) {
-        
         
         var chosenScheme : String?
         var textFieldScheme: UITextField?
@@ -1007,7 +1290,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     //COMPLETE
     @IBAction func gradeChanged(_ sender: UIStepper) {
         //print("Stepper in row: \(sender.tag) value of \(sender.value)")
-        
+        sender.stepValue = 1
         var indexPath = IndexPath(row: sender.tag, section: 0)
         
         if let cell = self.studentTable.cellForRow(at: indexPath) as? StudentUITableViewCell {
@@ -1051,11 +1334,14 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 str = chk_Gradelist[Int(sender.value)]
                 break
             case "num":
-                if (sender.value > 60){
-                    sender.stepValue = 1
+                if (Int(sender.value) < 50){
+                    sender.stepValue = 10
                 }
-                else {
+                else if (Int(sender.value) < 80 && Int(sender.value) > 50){
                     sender.stepValue = 5
+                }
+                else{
+                    sender.stepValue = 1
                 }
                 str = String(Int(sender.value))
                 break
@@ -1096,78 +1382,11 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             destination.title = "Report week: \(String(self.currentWeek))"
             destination.weekNum = self.currentWeek
             
-            //TODO calculations on averages
-//            destination.gradeAveLabel.text = "TODO"
-//            destination.attendedLabel.text = "TODO"
             
-        
-            var sorted = studentsInWeek.sorted{$0.grade > $1.grade}
+            destination.gradeAverage = averageWeek(students: studentsInWeek)
             
-            var gradeHigh: String!
-            var gradeHighCount = 0
+            destination.attendence = attendenceWeek(students: studentsInWeek, gradeStyle: self.gradeStyle)
             
-            
-// www.stackoverflow.com/questions/30545518/how-to-count-occurances-of-an-element-in-a-swift-array
-            var counts: [String: Int] = [:]
-            
-            //Get the counts
-            for item in studentsInWeek{
-                counts[item.grade] = (counts[item.grade] ?? 0) + 1
-            }
-            
-            //Find the highest, mode (not mean, could still be mean?)
-            for (key, value) in counts {
-                if (gradeHighCount == 0){
-                    gradeHigh = key
-                    gradeHighCount = value
-                }
-                
-                else if (value > gradeHighCount){
-                    gradeHigh = key
-                    gradeHighCount = value
-                }
-            }
-            
-            var attendCount = 0
-            
-            var nonAttend: String!
-            switch (gradeStyle){
-            case "hd":
-                nonAttend = "UG"
-                break
-            case "a":
-                nonAttend = "F"
-                break
-            case "num":
-                nonAttend = "0.0"
-                break
-            case "att":
-                nonAttend = "Not present"
-                break
-            default:
-                nonAttend = "Check 0"
-                break
-            }
-                
-            var attendence: Float!
-            
-            if (studentsInWeek.count != 0){
-                for i in 0...studentsInWeek.count-1{
-                    if (studentsInWeek[i].grade != nonAttend){
-                        attendCount += 1
-                    }
-                }
-                
-                attendence = (Float(attendCount) / Float(sorted.count)) * 100
-            }
-            else{
-                attendence = 0.0
-            }
-            
-            destination.gradeAverage = gradeHigh
-            
-            
-            destination.attendence = "\(String(attendence).prefix(4))%"
             
             //Create the report array
             var strRep = [String]()
@@ -1184,7 +1403,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
   
         if (segue.identifier == "toStudentView"){
-            //TODO
+            
             
             
             //We have the destination
@@ -1209,28 +1428,33 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             destination.studentName = selectedStudent.studentName
             destination.studentID = selectedStudent.studentID
             destination.unit = self.unit
+        
             
-            
-            var studentInformation [String]()
             
             //Grade average
-
+            /*
+                Cycle through DB
+                Add to string list getting grade and gradestyle
+                determine average grade
+                use this to determine attendence
+             */
             
-            destination.gradeAverage = "TODO"
+        
+           
+            destination.gradeAverage = "Uncalculated"
             
             
             //Attendence percent
             
             
-            destination.attendance = "TODO"
+            destination.attendance = "Uncalculated"
             
             
             
             //Last grade (latest week that isn't a UG / 0 / etc)
             
             
-            
-            destination.lastGrade = "TODO"
+            destination.lastGrade = selectedStudent.grade
             
             
         }
@@ -1239,6 +1463,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBAction func unwindToWeekList(sender: UIStoryboardSegue){
         print("Unwinded")
+        
         fetchDatabaseCall()
     }
     

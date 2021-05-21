@@ -233,7 +233,21 @@
                             <constraint firstItem="r28-et-gPa" firstAttribute="leading" secondItem="rah-UC-b2g" secondAttribute="trailing" constant="58" id="wcQ-Mp-v1D"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Weeks" id="cgc-OH-8rI"/>
+                    <navigationItem key="navigationItem" title="Unit" id="cgc-OH-8rI">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Yl1-Wg-CTc">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="CeF-5o-VrL">
+                                <rect key="frame" x="275" y="7" width="119" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Email Unit Report"/>
+                                <connections>
+                                    <action selector="unitSummaryEmail:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AT5-IU-vKQ"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="unitSummaryEmail:" destination="BYZ-38-t0r" id="bPM-er-bgD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="lastButton" destination="rah-UC-b2g" id="f6T-XR-u93"/>
                         <outlet property="markScheme" destination="r28-et-gPa" id="fdy-MP-dts"/>
@@ -467,8 +481,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-hY-y0M">
+                                <rect key="frame" x="105" y="546" width="205" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Calculate Fields"/>
+                                <connections>
+                                    <action selector="calcPressed:" destination="RSA-jh-cce" eventType="touchUpInside" id="KOx-dd-hnY"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="S_LGR_FIELD" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BV3-oD-O8V">
+                                <rect key="frame" x="171.5" y="500" width="210.5" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xd-aX-jD7">
-                                <rect key="frame" x="32" y="594" width="350" height="48"/>
+                                <rect key="frame" x="32" y="610" width="350" height="48"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title=" Email Student Summary ">
@@ -478,17 +506,6 @@
                                     <action selector="emailSummary:" destination="RSA-jh-cce" eventType="touchUpInside" id="qfe-E1-dPy"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EMS-hY-y0M">
-                                <rect key="frame" x="128" y="706" width="158" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Go back"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="S_LGR_FIELD" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BV3-oD-O8V">
-                                <rect key="frame" x="171.5" y="500" width="210.5" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AYK-no-vmX"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -498,18 +515,18 @@
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="5hl-mn-wwb" secondAttribute="trailing" constant="32" id="1Ag-D2-fGH"/>
                             <constraint firstItem="unY-Eg-gEG" firstAttribute="leading" secondItem="OaH-Xf-AI4" secondAttribute="trailing" constant="16" id="1Sc-ou-kL6"/>
                             <constraint firstItem="5hl-mn-wwb" firstAttribute="leading" secondItem="wX2-9c-KkH" secondAttribute="trailing" constant="16" id="4Ro-aW-D2w"/>
-                            <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="EMS-hY-y0M" secondAttribute="trailing" constant="128" id="5LK-xU-X1m"/>
                             <constraint firstItem="HLX-k3-gi8" firstAttribute="top" secondItem="5D2-z5-52E" secondAttribute="bottom" constant="16" id="9B9-1Y-Dxg"/>
                             <constraint firstItem="5hl-mn-wwb" firstAttribute="top" secondItem="69Q-xd-4e1" secondAttribute="bottom" constant="16" id="B56-Vj-Vmf"/>
                             <constraint firstItem="OaH-Xf-AI4" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="32" id="CMD-FE-zVv"/>
                             <constraint firstItem="wX2-9c-KkH" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="32" id="FfN-23-aEQ"/>
                             <constraint firstItem="OaH-Xf-AI4" firstAttribute="top" secondItem="wX2-9c-KkH" secondAttribute="bottom" constant="16" id="Hrr-Ka-wxb"/>
-                            <constraint firstItem="3Xd-aX-jD7" firstAttribute="top" secondItem="4Fc-Qb-DQo" secondAttribute="bottom" constant="64" id="IBj-He-AgJ"/>
+                            <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="EMS-hY-y0M" secondAttribute="trailing" constant="104" id="Il6-Wp-pg9"/>
                             <constraint firstItem="yNB-f0-WaX" firstAttribute="top" secondItem="AYK-no-vmX" secondAttribute="top" constant="16" id="LsT-PU-Zh7"/>
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="unY-Eg-gEG" secondAttribute="trailing" constant="32" id="M5u-ac-Ozt"/>
                             <constraint firstItem="BV3-oD-O8V" firstAttribute="top" secondItem="unY-Eg-gEG" secondAttribute="bottom" constant="16" id="MoZ-97-G0a"/>
                             <constraint firstItem="4Fc-Qb-DQo" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="32" id="NYl-R7-qyM"/>
                             <constraint firstItem="3Xd-aX-jD7" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="32" id="PDb-3R-zUn"/>
+                            <constraint firstItem="3Xd-aX-jD7" firstAttribute="top" secondItem="EMS-hY-y0M" secondAttribute="bottom" constant="16" id="RfQ-ig-XAZ"/>
                             <constraint firstItem="T9Z-kD-Dzr" firstAttribute="top" secondItem="HLX-k3-gi8" secondAttribute="bottom" constant="16" id="Rlz-v7-iBi"/>
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="5D2-z5-52E" secondAttribute="trailing" constant="16" id="SIz-SK-sL9"/>
                             <constraint firstAttribute="trailing" secondItem="HLX-k3-gi8" secondAttribute="trailing" constant="16" id="TO6-sl-Gd8"/>
@@ -519,9 +536,7 @@
                             <constraint firstItem="69Q-xd-4e1" firstAttribute="leading" secondItem="bsm-48-EDq" secondAttribute="trailing" constant="16" id="WWJ-2c-h0J"/>
                             <constraint firstItem="bsm-48-EDq" firstAttribute="top" secondItem="7Yu-SY-Ean" secondAttribute="bottom" constant="16" id="Y0y-sx-EZo"/>
                             <constraint firstItem="bsm-48-EDq" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="32" id="a2H-0o-fJb"/>
-                            <constraint firstItem="EMS-hY-y0M" firstAttribute="top" secondItem="3Xd-aX-jD7" secondAttribute="bottom" constant="64" id="art-YY-vmF"/>
                             <constraint firstItem="unY-Eg-gEG" firstAttribute="top" secondItem="5hl-mn-wwb" secondAttribute="bottom" constant="16" id="awb-3T-rPr"/>
-                            <constraint firstItem="EMS-hY-y0M" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="128" id="cwb-VR-hpM"/>
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="7Yu-SY-Ean" secondAttribute="trailing" constant="16" id="eV7-Sg-8fP"/>
                             <constraint firstItem="7Yu-SY-Ean" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="16" id="efv-8I-d6P"/>
                             <constraint firstItem="5D2-z5-52E" firstAttribute="leading" secondItem="yNB-f0-WaX" secondAttribute="trailing" constant="16" id="g97-FH-xT8"/>
@@ -529,9 +544,11 @@
                             <constraint firstItem="4Fc-Qb-DQo" firstAttribute="top" secondItem="OaH-Xf-AI4" secondAttribute="bottom" constant="16" id="hHM-AI-Bo5"/>
                             <constraint firstItem="wX2-9c-KkH" firstAttribute="top" secondItem="bsm-48-EDq" secondAttribute="bottom" constant="16" id="mS9-i4-3S9"/>
                             <constraint firstItem="HLX-k3-gi8" firstAttribute="leading" secondItem="yNB-f0-WaX" secondAttribute="trailing" constant="16" id="mvt-fb-1Wf"/>
+                            <constraint firstItem="EMS-hY-y0M" firstAttribute="leading" secondItem="AYK-no-vmX" secondAttribute="leading" constant="105" id="nJN-BE-Mqd"/>
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="BV3-oD-O8V" secondAttribute="trailing" constant="32" id="v07-dX-wz7"/>
                             <constraint firstItem="AYK-no-vmX" firstAttribute="trailing" secondItem="3Xd-aX-jD7" secondAttribute="trailing" constant="32" id="wV5-uq-XwI"/>
                             <constraint firstItem="5D2-z5-52E" firstAttribute="top" secondItem="AYK-no-vmX" secondAttribute="top" constant="16" id="wtD-NU-TrY"/>
+                            <constraint firstItem="EMS-hY-y0M" firstAttribute="top" secondItem="4Fc-Qb-DQo" secondAttribute="bottom" constant="16" id="yL8-vC-B3O"/>
                             <constraint firstItem="T9Z-kD-Dzr" firstAttribute="leading" secondItem="yNB-f0-WaX" secondAttribute="trailing" constant="16" id="yQb-pb-3cR"/>
                         </constraints>
                     </view>

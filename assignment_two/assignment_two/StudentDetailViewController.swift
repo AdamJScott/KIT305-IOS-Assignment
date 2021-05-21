@@ -35,12 +35,210 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
     var lastGrade: String!
     var unit: Unit!
     
+    
+    
     //Internal Variables
+    var gotData = false
+    var calculated = false
+    var studentInformation = [Student]()
     var imageRef: String!//Reference to the Document ID
+    
+    func getData(){
+        studentInformation.removeAll()
+        
+        let db = Firestore.firestore()
+        db.collection("units").document(self.unit!.id).collection("weeks").getDocuments(){
+            (result, err) in
+            
+            if let err = err {
+                print("error getting weeks")
+            }
+            
+            for docs in result!.documents{
+                
+                db.collection("units").document(self.unit!.id).collection("weeks").document(docs.documentID).collection("students").getDocuments(){ (res, err) in
+                    
+                    if let err = err {
+                        print("Error getting students")
+                    }
+                    
+                    let convertWeek = Result { try docs.data(as: Week.self)}
+                    switch convertWeek{
+                    case .success( let convertedWeek):
+                        if var weekConvered = convertedWeek {
+                            for students in res!.documents{
+                                let conversionResultStu = Result{ try students.data(as: Student.self)}
+                                switch conversionResultStu
+                                {
+                                case .success(let conversionDoc):
+                                    if var student = conversionDoc
+                                    {
+                                        if (student.studentID == self.studentID)
+                                        {
+                                            student.doc_id = weekConvered.gradeScheme
+//                                            print("Student in StudentDetail: \(student.studentName)")
+                                            self.studentInformation.append(student)
+                                        }
+                                    }
+                                
+                                case .failure(let error):
+                                    print("Error getting student: \(error)")
+                                }
+                                
+                            }
+                        }
+                        
+                        self.gotData = true
+                        
+                        
+                    case .failure(let error):
+                        print("error")
+                    }
+                    //print(self.studentInformation)
+                }
+            }
+        }
+    }
+
+    func hdToNumeric(grade: String) -> Int{
+        switch (grade){
+        case "HD":
+            return 100
+        case "DN":
+            return 80
+        case "CR":
+            return 60
+        case "PP":
+            return 50
+        case "NN":
+            return 25
+        default:
+            return 0
+        }
+    }
+    
+    func aToNumeric(grade:String) -> Int{
+        switch (grade){
+        case "A":
+            return 100
+        case "B":
+            return 80
+        case "C":
+            return 60
+        case "D":
+            return 50
+        case "F":
+            return 25
+        default:
+            return 0
+        }
+    }
+    
+    func numToNumeric(grade:String) -> Int{
+        return Int(Float(grade) ?? 0)
+    }
+    
+    func attToNumeric(grade:String) -> Int{
+        if (grade == "Present"){
+            return 100
+        }
+        else{
+            return 0
+        }
+    }
+    
+    func chkToNumeric(grade: String, gradeStyle: String) -> String{
+        //calculate percentage mark from gradeChose from GradeList
+            
+        if (grade.count > 5){
+        //get the int number in grade scheme
+        var amountOfPoints = Float(gradeStyle.suffix(from: String.Index(encodedOffset: 3)))
+        
+        //get the int number in grade
+            var gradeFound = grade.components(separatedBy: "Check ")
+            //print("Grade found: \(gradeFound[1])")
+            
+            var percentage = Float(gradeFound[1])! / amountOfPoints! * 100
+            
+        var strPer = percentage
+        //var strPer = "2"
+            
+        return String(strPer)
+        }
+        
+        return "0"
+    }
+    
+    func gradeToNumeric(grade: String, gradeStyle: String) -> String{
+        
+        switch (gradeStyle){
+        case "hd":
+            return String(hdToNumeric(grade: grade))
+        case "a":
+            return String(aToNumeric(grade: grade))
+        case "num":
+            return String(numToNumeric(grade: grade))
+        case "att":
+            return String(attToNumeric(grade: grade))
+        default:
+            //Chk point
+            return String(chkToNumeric(grade: grade, gradeStyle: gradeStyle))
+        }
+        return String("")
+    }
+    
+    
+    
+    func calculateGrade(){
+        var grades = [String]()
+        
+        for student in self.studentInformation{
+            grades.append(gradeToNumeric(grade: student.grade, gradeStyle: student.doc_id!))
+        }
+        
+        var gradeTotal = Float(0)
+        for grade in grades{
+            gradeTotal += Float(grade)!
+        }
+        
+        gradeAverage = String( (Int(gradeTotal) / grades.count)) + "%"
+        self.gradeAverageLabel.text = gradeAverage
+        
+        
+    }
+    
+    func calculateAttendence(){
+        
+        var attended = 0
+        
+        for student in self.studentInformation{
+            if (student.grade != "UG" || student.grade != "Check 0" || student.grade != "Not present")
+            {
+                attended += 1
+            }
+        }
+        
+        attendance = String(Float(attended / self.studentInformation.count) * 100)
+        
+        self.attendanceLabel.text = attendance
+        
+    }
+    
+    @IBAction func calcPressed(_ sender: Any) {
+       
+        if (self.studentInformation.count > 0){
+            calculateAttendence()
+            calculateGrade()
+        }
+        
+    }
     
     //Main functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        getData()
+       
+        
 
         //Populate fields
         studentNameField.text = studentName
@@ -54,6 +252,7 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
         let store = Storage.storage()
         
         self.present(confirmAlert(title: "Downloading photo", message: "Please wait", exit: false),animated: true,completion: nil)
+        
         
         db.collection("pictures").getDocuments(){ [self]
             (result, err) in
@@ -251,8 +450,9 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
         //TODO generate all weeks information
         var string = ""
         
-        
-        
+        string += "Student: \(studentName ?? "")\nWith ID: \(studentID ?? "")\n"
+        string += "Grade Average: \(gradeAverage ?? "")\n"
+        string += "Attendance percent: \(attendance ?? "")\n"
         
         UIPasteboard.general.string = string
             
@@ -368,11 +568,13 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
     }
     @IBAction func backClicked(_ sender: Any) {
         print("Back pressed")
+        self.studentInformation.removeAll()
         self.performSegue(withIdentifier: "returnSegue", sender: sender)
     }
     
     @IBAction func WeeksBack(_ sender: Any) {
         print("Back pressed")
+        self.studentInformation.removeAll()
         self.performSegue(withIdentifier: "returnSegue", sender: sender)
     }
     
