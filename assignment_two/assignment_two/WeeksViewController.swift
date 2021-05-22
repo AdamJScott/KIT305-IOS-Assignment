@@ -6,7 +6,6 @@
 //
 
 
-//TODO MOVEMENT TO STUDENT DETAILS, Need to get student information then completed
 
 
 
@@ -386,7 +385,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
             textFieldName = (addAlert?.textFields![0])!
             textFieldID = (addAlert?.textFields![1])!
             
-            //TODO CHECK IF ID IS PURELY A NUMBER
+           
             let idNumber = Int((textFieldID?.text)!) ?? -1
             
             if (idNumber != -1)
@@ -396,7 +395,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                     (self.studentsInWeek.contains(where: { id in id.studentID == textFieldID?.text}))
                 ){
                     print("ID exists")
-                    //TODO Error, ID already exists
+                    
                     self.present(confirmAlert(title: "Error", message: "ID exists in week"), animated: true, completion: nil)
                 }
                 
@@ -475,7 +474,7 @@ class WeeksViewController: UIViewController, UITableViewDataSource, UITableViewD
                 }
             }
             else{
-                //TODO error, ID is not a number
+                
                 print("ID NUMBER IS NOT A NUMBER")
                 
                 self.present(confirmAlert(title: "Error", message: "ID number: \((textFieldID?.text)!) is not a number"), animated: true, completion: nil)

@@ -427,7 +427,7 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
             }
         }
         
-        //TODO REMOVE THE IMAGE DOCUMENT IN DB
+        
         let storage = Storage.storage()
         let storRef = storage.reference()
         let imageDel = storRef.child(imageRef)
@@ -447,7 +447,7 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
     }
     
     @IBAction func emailSummary(_ sender: Any) {
-        //TODO generate all weeks information
+        
         var string = ""
         
         string += "Student: \(studentName ?? "")\nWith ID: \(studentID ?? "")\n"
@@ -462,7 +462,7 @@ class StudentDetailViewController: UIViewController, UINavigationControllerDeleg
     
     //Student Name Func
     @IBAction func saveChangedName(_ sender: Any) {
-        //TODO Change the student's name in database
+      
         
         
 
